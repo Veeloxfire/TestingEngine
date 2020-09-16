@@ -60,4 +60,17 @@ namespace Testing
 
 	template<bool B, class T, class F>
 	using Conditional = typename ConditionalHelper<B, T, F>::Type;
+
+#ifdef _MSC_VER
+	template<typename T>
+	constexpr bool IsTriviallyDestructable = __is_trivially_destructible(T);
+#elif __GNUC__
+	template<typename T>
+	constexpr bool IsTriviallyDestructable = __has_trivial_destructor(T);
+#elif __clang__
+	template<typename T>
+	constexpr bool IsTriviallyDestructable = __is_trivially_destructible(T);
+#else
+	static_assert(false, "Compiler Unsupported")
+#endif
 }
