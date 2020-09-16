@@ -7,7 +7,5 @@ namespace Testing
 	{
 	public:
 		virtual const char* GetName() const = 0;
-		virtual bool RunCode() = 0;
-		virtual void TestFunction() = 0;
 	};
 }

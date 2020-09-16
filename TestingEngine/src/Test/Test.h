@@ -4,13 +4,26 @@
 
 namespace Testing
 {
-	class Test : public TestAPI
-	{
-	protected:
-		Assert Assert;
+	template<typename T>
+	class Test;
 
+	template<typename ReturnType>
+	class Test<ReturnType(*)()> : public TestAPI
+	{
+		using FunctionType = ReturnType(*)();
+
+		const char* const TestName;
+		const FunctionType TestFunction;
 	public:
-		Test(EngineAPI& api) : Assert(api) {}
-		bool RunCode() override;
+		Test(const char* name, const FunctionType test) : TestName(name) TestFunction(test) {}
+
+		const char* GetName() const { return TestName; }
+		ReturnType operator()() const
+		{
+			return TestFunction();
+		}
 	};
+
+	template<typename T>
+	Test(const T t)->Test<T>;
 }

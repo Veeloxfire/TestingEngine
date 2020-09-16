@@ -4,21 +4,30 @@
 
 namespace Testing
 {
-	class FailedAssertDetails
+	class AssertDetails
 	{
+	public:
+		virtual bool AssertFailed() const = 0;
 		virtual void LogDetails() const = 0;
-		virtual const char* GetAssertType() const = 0;
 	};
 
 	template <typename Type>
-	class AreEqualDetails : public FailedAssertDetails
+	class AreEqualDetails : public AssertDetails
 	{
 		Type Expected;
 		Type Actual;
+		
 	public:
-		AreEqualDetails(const Type& e, const Type& a)
-			:Expected(e), Actual(a)
+		static constexpr char* Name = "AreEqual";
+
+		AreEqualDetails(Type&& e, Type&& a)
+			:Expected(std::forward<Type>(e)), Actual(std::forward<Type>(a))
 		{}
+
+		bool AssertFailed() const override
+		{
+			return Result.HasValue();
+		}
 
 		const char* GetAssertType() const override {
 			static constexpr const char* Name = "AreEqual";
@@ -31,6 +40,7 @@ namespace Testing
 			LogActual();
 		}
 
+	private:
 		void LogExpected() const
 		{
 			IO::LogStringAndNewline("Expected:");
