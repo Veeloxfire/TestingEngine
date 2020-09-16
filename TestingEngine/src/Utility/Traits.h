@@ -3,6 +3,12 @@
 
 namespace Testing
 {
+	template<typename T>
+	auto Unevaluated()->T&&;
+
+	template<typename T>
+	using ReturnTypeOf = decltype(Unevaluated<T>()());
+
 	template<typename T, typename U>
 	struct IsSame_Helper
 	{

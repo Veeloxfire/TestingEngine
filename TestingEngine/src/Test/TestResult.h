@@ -3,11 +3,13 @@
 #include "Utility\Traits.h"
 namespace Testing
 {
+	class TestResultBase {};
+
 	template<typename ... Lambdas>
 	class TestResult;
 
 	template<typename Last>
-	class TestResult<Last>
+	class TestResult<Last> : public TestResultBase
 	{
 		static_assert(IsBaseOf<AssertLambdaBase, Last>::value, "TestResult template argument must be AssertLambda");
 		using Result = typename Last::ReturnType;
@@ -17,6 +19,8 @@ namespace Testing
 	public:
 		constexpr TestResult(const Last& F) : first(F())
 		{}
+
+		constexpr const Result& GetFirst() const { return first; }
 	};
 
 	template<typename First, typename ... Rest>
@@ -29,6 +33,8 @@ namespace Testing
 	public:
 		constexpr TestResult(const First& F, const Rest& ... R) : first(F()), TestResult<Rest...>(R)
 		{}
+
+		constexpr const Result& GetFirst() const { return first; }
 	};
 
 	template<typename ... Lambdas>

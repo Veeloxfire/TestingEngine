@@ -37,30 +37,20 @@ namespace Testing
 	};
 }
 
-class TwoIntsTest : public Testing::Test
+auto TestFunction()
 {
-public:
-	TwoIntsTest(Testing::EngineAPI& api) : Testing::Test(api)
-	{}
-
-
-	const char* GetName() const override { constexpr static const char* Name = "TwoIntsTest"; return Name; }
-
-	void TestFunction() override
-	{
-		TwoInts a{ 1, 2 };
-		TwoInts b = TwoIntsFactory(1);
-		Assert.AreEqual(a, b);
-	}
-};
-
+	TwoInts a{ 1, 2 };
+	TwoInts b = TwoIntsFactory(1);
+	auto Test1 = Testing::Assert::AreEqual(a, b);
+	return Testing::TestResult(Test1);
+}
 
 int main()
 {
-	Testing::Engine engine;
-	TwoIntsTest test(engine);
+	Testing::Test t("FirstTest", &TestFunction);
 
-	engine.SetTests(&test, 1);
+	Testing::Engine engine(t);
+
 	engine.RunAllTests();
 	return 0;
 }

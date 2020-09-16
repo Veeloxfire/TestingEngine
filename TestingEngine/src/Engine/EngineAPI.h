@@ -1,14 +1,12 @@
 #pragma once
-#include "Test\TestAPI.h"
-#include "Assert\FailedAssertResultAPI.h"
+#include "Assert\AssertResultAPI.h"
 namespace Testing
 {
+	template<typename EngineBackend>
 	class EngineAPI
 	{
-	public:
-		virtual void SetTests(TestAPI* tests, unsigned int numberOfTests) = 0;
-		virtual void RunAllTests() = 0;
-		virtual void LogTestFailure() = 0;
-		virtual void LogAssertFailure(const FailedAssertResultAPI& result) = 0;
+		EngineBackend Engine;
+
+
 	};
 }

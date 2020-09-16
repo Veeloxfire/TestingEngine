@@ -33,4 +33,9 @@ namespace Testing
 	{
 		std::cout << std::endl;
 	}
+
+	void ConsoleIO::LogAssert(const AssertResultAPI& res) const
+	{
+		res.LogAssert();
+	}
 }

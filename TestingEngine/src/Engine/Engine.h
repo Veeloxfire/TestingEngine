@@ -1,25 +1,42 @@
 #pragma once
-#include "EngineAPI.h"
-#include "Assert\FailedAssertResultAPI.h"
-
+#include "Test\Tests.h"
 namespace Testing
 {
-	class Engine : public EngineAPI
+	template<typename ... Test>
+	class Engine
 	{
-		bool AllTestsSucceeded = true;
-
-		TestAPI* Tests = nullptr;
-		unsigned int NumberOfTests = 0;
+		Tests<Test...> m_Tests;
 	public:
-		void SetTests(TestAPI* tests, unsigned int numberOfTests) override;
-		void RunAllTests() override;
+		constexpr Engine(Test&& ... t) : m_Tests(std::forward<Test>(t)...)
+		{}
 
-		void LogTestFailure() override;
-		void LogAssertFailure(const FailedAssertResultAPI& result) override;
+		constexpr void RunAllTests() const
+		{
+			RecurseAllTests(m_Tests);
+		}
+
 	private:
-		void RunTest(TestAPI& test);
-		
-		void LogTestStart(const TestAPI& test);
-		void LogTestSuccess();
+		template<typename First, typename ... Rest>
+		constexpr void RecurseAllTests(const Tests<First, Rest...>& tests) const
+		{
+			RunTest(tests.GetFirst());
+			RecurseAllTests<Rest...>(tests);
+		}
+
+		template<typename First>
+		constexpr void RecurseAllTests(const Tests<First>& tests) const
+		{
+			RunTest(tests.GetFirst());
+		}
+
+		template<typename TestObj>
+		void RunTest(const TestObj& test)
+		{
+			IO::LogStringAndNewline(test.GetName());
+			IO::LogTestResult(test());
+		}
 	};
+
+	template<typename ... Test>
+	Engine(Test&& ... t)->Engine<Test...>;
 }

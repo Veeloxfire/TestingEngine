@@ -24,7 +24,6 @@ namespace Testing
 		};
 
 		bool m_HasValue;
-
 	public:
 		constexpr OptionalTrivialHolder() : empty(), m_HasValue(false) {}
 		constexpr OptionalTrivialHolder(const Empty& E) : empty(), m_HasValue(false) {}
@@ -69,7 +68,7 @@ namespace Testing
 	};
 
 	template<typename T>
-	class Optional : Conditional<IsTriviallyDestructable<T>, OptionalTrivialHolder<T>, OptionalNonTrivialHolder<T>>
+	class Optional : public Conditional<IsTriviallyDestructable<T>, OptionalTrivialHolder<T>, OptionalNonTrivialHolder<T>>
 	{
 		using Backend = Conditional<
 			IsTriviallyDestructable<T>,
@@ -88,15 +87,15 @@ namespace Testing
 		template<typename ... Ts>
 		constexpr Optional(Ts&& ... ts) : Backend(std::forward<Ts>(ts)...) {}
 
-		bool HasValue() const
+		constexpr bool HasValue() const
 		{
-			return m_HasValue;
+			return this->m_HasValue;
 		}
 
 		constexpr void Empty()
 		{
-			if (m_HasValue) Allocator::Destruct(notEmpty);
-			m_HasValue = false;
+			if (this->m_HasValue) Allocator::Destruct(this->notEmpty);
+			this->m_HasValue = false;
 		}
 
 		template<typename ... Ts>
@@ -104,18 +103,18 @@ namespace Testing
 		{
 			Empty();
 
-			Allocator::Construct::InPlace(notEmpty, std::foward<Ts>(ts)...);
-			m_HasValue = true;
+			Allocator::Construct::InPlace(this->notEmpty, std::forward<Ts>(ts)...);
+			this->m_HasValue = true;
 		}
 
-		const T& operator->() const
+		constexpr const T& operator->() const
 		{
-			return notEmpty;
+			return this->notEmpty;
 		}
 
-		T& operator->()
+		constexpr T& operator->()
 		{
-			return notEmpty;
+			return this->notEmpty;
 		}
 	};
 }

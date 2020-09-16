@@ -23,5 +23,11 @@ namespace Testing
 		{
 			GetAPI().LogObject(LogObjectFactory<Type>::Build(t));
 		}
+
+		template<typename Type>
+		static void LogTestResult(const Type& t)
+		{
+			GetAPI().LogTestResult(t);
+		}
 	};
 }

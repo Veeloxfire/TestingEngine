@@ -34,13 +34,14 @@ namespace Testing
 	template<typename AssertType>
 	class AssertWithoutMessage : public AssertResult
 	{
-		static_assert(IsBaseOf<AssertDetails, AssertType>::value, "Assert type must implement FailedAssertDetails");
-
+	protected:
 		Optional<AssertType> details;
 	public:
 		AssertWithoutMessage()
 			: details()
 		{}
+
+		bool Failed() const { return details.HasValue(); }
 
 		template<typename ... Ts>
 		AssertWithoutMessage(Ts&& ... ts)
@@ -61,8 +62,6 @@ namespace Testing
 	template<typename AssertType>
 	class AssertWithMessage : public AssertWithoutMessage<AssertType>
 	{
-		static_assert(IsBaseOf<AssertDetails, AssertType>::value, "Assert type must implement FailedAssertDetails");
-
 		std::string ErrorMessage;
 
 		void LogErrorMessage() const
@@ -84,7 +83,7 @@ namespace Testing
 		void LogAssertContents() const override final
 		{
 			LogErrorMessage();
-			details.LogDetails();
+			this->details.LogDetails();
 		}
 	};
 

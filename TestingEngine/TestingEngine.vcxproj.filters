@@ -24,13 +24,7 @@
     <ClInclude Include="src\Test\Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Test\TestAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Test\TestResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Test\TestResultAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IO\ConsoleIO.h">
@@ -60,33 +54,33 @@
     <ClInclude Include="src\LogObject\LogObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assert\FailedAssertResultAPI.h">
+    <ClInclude Include="src\Utility\Optional.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assert\FailedAssertResults.h">
+    <ClInclude Include="src\Utility\Allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assert\FailedAssertResultDetails.h">
+    <ClInclude Include="src\Assert\AssertLambda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assert\AssertResultAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assert\AssertResultDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assert\AssertResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\Tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Test\Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Test\TestResult.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IO\ConsoleIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IO\IO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Assert\Assert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">

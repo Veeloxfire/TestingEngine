@@ -1,5 +1,5 @@
 #pragma once
-#include "FailedAssertResults.h"
+#include "AssertResults.h"
 #include "AssertLambda.h"
 
 namespace Testing
@@ -14,13 +14,13 @@ namespace Testing
 								{
 									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
 									{
-										FailedAssertWithoutMessage<AreEqualDetails<Type>> result(std::move(Expected),
-																								 std::move(Actual));
+										AssertWithoutMessage<AreEqualDetails<Type>> result(std::move(Expected),
+																						   std::move(Actual));
 										return result;
 									}
 									else
 									{
-										FailedAssertWithoutMessage<AreEqualDetails<Type>> result;
+										AssertWithoutMessage<AreEqualDetails<Type>> result;
 										return result;
 									}
 								}
@@ -34,14 +34,14 @@ namespace Testing
 								{
 									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
 									{
-										FailedAssertWithMessage<AreEqualDetails<Type>> result(std::move(Message),
-																							  std::move(Expected),
-																							  std::move(Actual));
+										AssertWithMessage<AreEqualDetails<Type>> result(std::move(Message),
+																						std::move(Expected),
+																						std::move(Actual));
 										return result;
 									}
 									else
 									{
-										FailedAssertWithoutMessage<AreEqualDetails<Type>> result;
+										AssertWithoutMessage<AreEqualDetails<Type>> result;
 										return result;
 									}
 								}

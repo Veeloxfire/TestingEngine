@@ -9,9 +9,10 @@ namespace Testing
 	class AssertLambda : public AssertLambdaBase
 	{
 		const T lambda;
-		using ReturnType = decltype(lambda());
 	public:
-		constexpr AssertLambda(T&& l) : lambda(std::forward<T>(lambda) {}
+		using ReturnType = decltype(lambda());
+
+		constexpr AssertLambda(T&& l) : lambda(std::forward<T>(l)) {}
 
 		constexpr auto operator()() const
 		{

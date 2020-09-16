@@ -1,29 +1,30 @@
 #pragma once
-#include "TestAPI.h"
-#include "Assert\Assert.h"
 
+#include "Assert\Assert.h"
+#include "TestResult.h"
 namespace Testing
 {
-	template<typename T>
-	class Test;
+	class TestBase {};
 
-	template<typename ReturnType>
-	class Test<ReturnType(*)()> : public TestAPI
+	template<typename TestFunction>
+	class Test : public TestBase
 	{
-		using FunctionType = ReturnType(*)();
+		using ReturnType = ReturnTypeOf<TestFunction>;
 
-		const char* const TestName;
-		const FunctionType TestFunction;
-	public:
-		Test(const char* name, const FunctionType test) : TestName(name) TestFunction(test) {}
+		static_assert(IsBaseOf<TestResultBase, ReturnType>::value, "Function Must Return TestResult");
 
-		const char* GetName() const { return TestName; }
+		const char* const m_TestName;
+		const TestFunction m_TestFunction;
+	public: 
+		constexpr Test(const char* const name, const TestFunction test) : m_TestName(name), m_TestFunction(test) {}
+
+		const char* GetName() const { return m_TestName; }
 		ReturnType operator()() const
 		{
-			return TestFunction();
+			return m_TestFunction();
 		}
 	};
 
 	template<typename T>
-	Test(const T t)->Test<T>;
+	Test(const char* const name, const T t)->Test<T>;
 }
