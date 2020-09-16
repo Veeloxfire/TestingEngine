@@ -17,11 +17,6 @@ namespace Testing
 			:Expected(std::forward<Type>(e)), Actual(std::forward<Type>(a))
 		{}
 
-		const char* GetAssertType() const {
-			static constexpr const char* Name = "AreEqual";
-			return Name;
-		}
-
 		void LogDetails() const
 		{
 			LogExpected();

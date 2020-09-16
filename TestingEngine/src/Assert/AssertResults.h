@@ -50,12 +50,12 @@ namespace Testing
 
 		void LogAssertContents() const override
 		{
-			details.LogDetails();
+			details->LogDetails();
 		}
 
 		std::string GetAssertType() const override final
 		{
-			return AssertType::name;
+			return AssertType::Name;
 		}
 	};
 
@@ -83,7 +83,7 @@ namespace Testing
 		void LogAssertContents() const override final
 		{
 			LogErrorMessage();
-			this->details.LogDetails();
+			this->details->LogDetails();
 		}
 	};
 

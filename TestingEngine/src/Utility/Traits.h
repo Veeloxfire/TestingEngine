@@ -9,6 +9,36 @@ namespace Testing
 	template<typename T>
 	using ReturnTypeOf = decltype(Unevaluated<T>()());
 
+	template<typename T>
+	struct RemoveReferenceHelper
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	struct RemoveReferenceHelper<T&>
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	using RemoveReference = typename RemoveReferenceHelper<T>::Type;
+
+	template<typename T>
+	struct IsReferenceHelper
+	{
+		using Type = False;
+	};
+
+	template<typename T>
+	struct IsReferenceHelper<T&>
+	{
+		using Type = True;
+	};
+
+	template<typename T>
+	using IsReferenceType = typename IsReferenceHelper<T>::Type;
+
 	template<typename T, typename U>
 	struct IsSame_Helper
 	{
