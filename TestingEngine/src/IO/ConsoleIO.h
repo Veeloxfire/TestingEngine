@@ -30,7 +30,7 @@ namespace Testing
 		template<typename ... AssertResults>
 		void LogTestResult(const TestResult<AssertResults...>& log) const
 		{
-			RecusivelyLogAsserts(log, std::cout);
+			RecusivelyLogAsserts(log);
 		}
 
 		template<typename First>

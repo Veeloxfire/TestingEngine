@@ -30,7 +30,7 @@ namespace Testing
 		}
 
 		template<typename TestObj>
-		void RunTest(const TestObj& test)
+		void RunTest(const TestObj& test) const
 		{
 			IO::LogStringAndNewline(test.GetName());
 			IO::LogTestResult(test());

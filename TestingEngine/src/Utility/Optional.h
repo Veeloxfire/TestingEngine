@@ -107,14 +107,14 @@ namespace Testing
 			this->m_HasValue = true;
 		}
 
-		constexpr const T& operator->() const
+		constexpr const T* operator->() const
 		{
-			return this->notEmpty;
+			return &this->notEmpty;
 		}
 
-		constexpr T& operator->()
+		constexpr T* operator->()
 		{
-			return this->notEmpty;
+			return &this->notEmpty;
 		}
 	};
 }
