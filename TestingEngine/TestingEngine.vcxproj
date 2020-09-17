@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Assert\Assert.h" />
-    <ClInclude Include="src\Assert\AssertLambda.h" />
     <ClInclude Include="src\Assert\AssertResultAPI.h" />
     <ClInclude Include="src\Assert\AssertResultDetails.h" />
     <ClInclude Include="src\Assert\AssertResults.h" />

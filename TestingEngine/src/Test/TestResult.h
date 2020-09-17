@@ -1,5 +1,5 @@
 #pragma once
-#include "Assert\AssertLambda.h"
+#include "Assert\AssertResultAPI.h"
 #include "Utility\Traits.h"
 namespace Testing
 {
@@ -11,32 +11,34 @@ namespace Testing
 	template<typename Last>
 	class TestResult<Last> : public TestResultBase
 	{
-		static_assert(IsBaseOf<AssertLambdaBase, Last>::value, "TestResult template argument must be AssertLambda");
-		using Result = typename Last::ReturnType;
+		static_assert(IsBaseOf<AssertResultAPI, Last>::value, "TestResult template argument must be AssertResultAPI");
 
-		const Result first;
+		ConstOf<Last> first;
 
 	public:
-		constexpr TestResult(const Last& F) : first(F())
+		constexpr TestResult(Last& F) : first(std::move(F))
+		{}
+		constexpr TestResult(const Last& F) : first(F)
 		{}
 
-		constexpr const Result& GetFirst() const { return first; }
+		constexpr const Last& GetFirst() const { return first; }
 	};
 
 	template<typename First, typename ... Rest>
 	class TestResult<First, Rest...> : public TestResult<Rest...>
 	{
-		static_assert(IsBaseOf<AssertLambdaBase, First>::value, "TestResult template argument must be AssertLambda");
-		using Result = typename First::ReturnType;
+		static_assert(IsBaseOf<AssertResultAPI, First>::value, "TestResult template argument must be AssertResultAPI");
 
-		const Result first;
+		ConstOf<First> first;
 	public:
-		constexpr TestResult(const First& F, const Rest& ... R) : first(F()), TestResult<Rest...>(R)
+		constexpr TestResult(First& F, Rest& ... R) : first(std::move(F)), TestResult<Rest...>(R...)
+		{}
+		constexpr TestResult(const First& F, Rest& ... R) : first(F), TestResult<Rest...>(R...)
 		{}
 
-		constexpr const Result& GetFirst() const { return first; }
+		constexpr const First& GetFirst() const { return first; }
 	};
 
-	template<typename ... Lambdas>
-	TestResult(const Lambdas& ... L)->TestResult<Lambdas...>;
+	template<typename ... Results>
+	TestResult(Results& ... L)->TestResult<Results...>;
 }

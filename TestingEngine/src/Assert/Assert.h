@@ -1,6 +1,5 @@
 #pragma once
 #include "AssertResults.h"
-#include "AssertLambda.h"
 
 namespace Testing
 {
@@ -8,45 +7,29 @@ namespace Testing
 	{
 	public:
 		template <typename Type>
-		constexpr static auto AreEqual(const Type& Expected, const Type& Actual)
+		constexpr static auto AreEqual(Type Expected, Type Actual)
 		{
-			return AssertLambda([=]()
-								{
-									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
-									{
-										Type E = Expected;
-										Type A = Actual;
-										AssertWithoutMessage<AreEqualDetails<Type>> result(std::move(E), std::move(A));
-										return result;
-									}
-									else
-									{
-										AssertWithoutMessage<AreEqualDetails<Type>> result;
-										return result;
-									}
-								}
-			);
+			if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
+			{
+				return AssertWithoutMessage<AreEqualDetails<Type>>(std::move(Expected), std::move(Actual));
+			}
+			else
+			{
+				return AssertWithoutMessage<AreEqualDetails<Type>>();
+			}
 		}
 
 		template <typename Type>
-		constexpr static auto AreEqual(const Type& Expected, const Type& Actual, std::string Message)
+		constexpr static auto AreEqual(Type Expected, Type Actual, std::string Message)
 		{
-			return AssertLambda([=]()
-								{
-									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
-									{
-										Type E = Expected;
-										Type A = Actual;
-										AssertWithMessage<AreEqualDetails<Type>> result(Message, std::move(E), std::move(A));
-										return result;
-									}
-									else
-									{
-										AssertWithoutMessage<AreEqualDetails<Type>> result;
-										return result;
-									}
-								}
-			);
+			if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
+			{
+				return AssertWithoutMessage<AreEqualDetails<Type>>(std::move(Message), std::move(Expected), std::move(Actual));
+			}
+			else
+			{
+				return AssertWithoutMessage<AreEqualDetails<Type>>();
+			}
 		}
 	};
 }

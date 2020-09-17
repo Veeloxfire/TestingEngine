@@ -4,6 +4,21 @@
 namespace Testing
 {
 	template<typename T>
+	struct ConstOfHelper
+	{
+		using Type = const T;
+	};
+
+	template<typename T>
+	struct ConstOfHelper<const T>
+	{
+		using Type = const T;
+	};
+
+	template<typename T>
+	using ConstOf = typename ConstOfHelper<T>::Type;
+
+	template<typename T>
 	auto Unevaluated()->T&&;
 
 	template<typename T>
@@ -83,7 +98,7 @@ namespace Testing
 	};
 
 	template <typename Base, typename Derived>
-	using IsBaseOf = typename IsBaseOf_Helper<Base, Derived>::Type;
+	using IsBaseOf = typename IsBaseOf_Helper<RemoveReference<Base>, RemoveReference<Derived>>::Type;
 
 	template<bool B, class T, class F> //Dont need this but it makes it neater
 	struct ConditionalHelper;

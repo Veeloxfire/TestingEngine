@@ -41,6 +41,7 @@ auto TestFunction()
 {
 	TwoInts a{ 1, 2 };
 	TwoInts b = TwoIntsFactory(1);
+
 	auto Test1 = Testing::Assert::AreEqual(a, b);
 	return Testing::TestResult(Test1);
 }

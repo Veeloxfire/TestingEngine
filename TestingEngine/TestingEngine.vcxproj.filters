@@ -60,9 +60,6 @@
     <ClInclude Include="src\Utility\Allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assert\AssertLambda.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Assert\AssertResultAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
