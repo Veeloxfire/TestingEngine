@@ -8,14 +8,15 @@ namespace Testing
 	{
 	public:
 		template <typename Type>
-		constexpr static auto AreEqual(Type Expected, Type Actual)
+		constexpr static auto AreEqual(const Type& Expected, const Type& Actual)
 		{
-			return AssertLambda([&]()
+			return AssertLambda([=]()
 								{
 									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
 									{
-										AssertWithoutMessage<AreEqualDetails<Type>> result(std::move(Expected),
-																						   std::move(Actual));
+										Type E = Expected;
+										Type A = Actual;
+										AssertWithoutMessage<AreEqualDetails<Type>> result(std::move(E), std::move(A));
 										return result;
 									}
 									else
@@ -28,15 +29,15 @@ namespace Testing
 		}
 
 		template <typename Type>
-		constexpr static auto AreEqual(Type Expected, Type Actual, std::string Message)
+		constexpr static auto AreEqual(const Type& Expected, const Type& Actual, std::string Message)
 		{
-			return AssertLambda([&]()
+			return AssertLambda([=]()
 								{
 									if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
 									{
-										AssertWithMessage<AreEqualDetails<Type>> result(std::move(Message),
-																						std::move(Expected),
-																						std::move(Actual));
+										Type E = Expected;
+										Type A = Actual;
+										AssertWithMessage<AreEqualDetails<Type>> result(Message, std::move(E), std::move(A));
 										return result;
 									}
 									else
