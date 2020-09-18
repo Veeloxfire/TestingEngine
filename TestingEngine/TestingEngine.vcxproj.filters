@@ -39,16 +39,10 @@
     <ClInclude Include="src\LogObject\LogObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\TypeName.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utility\BooleanConstructs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\Traits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LogObject\LogObjectFactory.h">
@@ -70,6 +64,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\Tests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TypeNames\TypeName.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TypeNames\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

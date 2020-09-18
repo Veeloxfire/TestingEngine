@@ -32,9 +32,25 @@ namespace Testing
 		template<typename TestObj>
 		void RunTest(const TestObj& test) const
 		{
-			IO::LogStringAndNewline(test.GetName());
-			IO::LogTestResult(test());
+			IO::LogString(test.GetName());
+			IO::LogString(" - ");
+			AnalyseResult(test());
 		}
+
+		template<typename TestResult>
+		void AnalyseResult(const TestResult& test) const
+		{
+			if (test.Failed())
+			{
+				IO::LogFailure();
+				IO::LogTestResult(test);
+			}
+			else
+			{
+				IO::LogSuccess();
+			}
+		}
+
 	};
 
 	template<typename ... Test>

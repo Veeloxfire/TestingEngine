@@ -41,7 +41,7 @@ namespace Testing
 			: details()
 		{}
 
-		bool Failed() const { return details.HasValue(); }
+		bool AssertFailed() const override { return details.HasValue(); }
 
 		template<typename ... Ts>
 		AssertWithoutMessage(Ts&& ... ts)

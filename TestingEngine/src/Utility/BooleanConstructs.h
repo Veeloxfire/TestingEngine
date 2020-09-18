@@ -17,4 +17,7 @@ namespace Testing
 	using False = BoolStruct<false>;
 	using True  = BoolStruct<true>;
 
+	template<typename ... T>
+	using And = BoolStruct<(T::value && ...)>;
+
 }

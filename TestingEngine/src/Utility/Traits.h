@@ -100,6 +100,9 @@ namespace Testing
 	template <typename Base, typename Derived>
 	using IsBaseOf = typename IsBaseOf_Helper<RemoveReference<Base>, RemoveReference<Derived>>::Type;
 
+	template <typename Base, typename ... Derived>
+	using IsAllBaseOf = And<IsBaseOf<Base, Derived>...>;
+
 	template<bool B, class T, class F> //Dont need this but it makes it neater
 	struct ConditionalHelper;
 

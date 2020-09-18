@@ -159,11 +159,11 @@
     <ClInclude Include="src\Test\TestResult.h" />
     <ClInclude Include="src\Test\Tests.h" />
     <ClInclude Include="src\Utility\BooleanConstructs.h" />
-    <ClInclude Include="src\Utility\Array.h" />
+    <ClInclude Include="src\TypeNames\Array.h" />
     <ClInclude Include="src\Utility\Allocator.h" />
     <ClInclude Include="src\Utility\Optional.h" />
     <ClInclude Include="src\Utility\Traits.h" />
-    <ClInclude Include="src\Utility\TypeName.h" />
+    <ClInclude Include="src\TypeNames\TypeName.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IO\ConsoleIO.cpp" />

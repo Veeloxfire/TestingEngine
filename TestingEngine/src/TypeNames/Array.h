@@ -1,4 +1,5 @@
 #pragma once
+
 namespace TypeNames
 {
 	template<typename T, unsigned int Size>
@@ -11,6 +12,15 @@ namespace TypeNames
 
 		constexpr Array() {}
 	};
+
+	template<typename T, unsigned int Size>
+	Array(const Array<T, Size>& arr)->Array<T, Size>;
+
+	template<typename T, unsigned int Size>
+	Array(Array<T, Size>&& arr)->Array<T, Size>;
+
+	template<unsigned int Size>
+	using String = Array<char, Size>;
 	
 	class ArrayFactory {
 	public:
@@ -76,22 +86,46 @@ namespace TypeNames
 			return Make(arr1.Arr, in_arr2);
 		}
 
-		template <typename T, unsigned int A, unsigned int B>
-		constexpr static Array<T, A + B - 1> ConcatStrings(const Array<T, A>& arr1, const Array<T, B>& arr2)
+		template <unsigned int A, unsigned int B>
+		constexpr static String<A + B - 1> ConcatStrings(const String<A>& arr1, const String<B>& arr2)
 		{
 			return MakeOverlap<1>(arr1.Arr, arr2.Arr);
 		}
 
-		template <typename T, unsigned int A, unsigned int B>
-		constexpr static Array<T, A + B - 1> ConcatStrings(const T(&in_arr1)[A], const Array<T, B>& arr2)
+		template <unsigned int A, unsigned int B>
+		constexpr static String<A + B - 1> ConcatStrings(const char(&in_arr1)[A], const String<B>& arr2)
 		{
 			return MakeOverlap<1>(in_arr1, arr2.Arr);
 		}
 
-		template <typename T, unsigned int A, unsigned int B>
-		constexpr static Array<T, A + B - 1> ConcatStrings(const Array<T, A>& arr1, const T(&in_arr2)[B])
+		template <unsigned int A, unsigned int B>
+		constexpr static String<A + B - 1> ConcatStrings(const String<A>& arr1, const char(&in_arr2)[B])
 		{
 			return MakeOverlap<1>(arr1.Arr, in_arr2);
+		}
+
+		template <typename First>
+		constexpr static auto ConcatStrings(const First& f)
+		{
+			return f;
+		}
+
+		template <typename First, typename ... Strings>
+		constexpr static auto ConcatStrings(const First& f, const Strings& ... strs)
+		{
+			return ConcatStrings(f, ConcatStrings(strs...));
+		}
+
+		template <typename First>
+		constexpr static auto ConcatTypeNames(const First& f)
+		{
+			return f;
+		}
+
+		template <typename First, typename ... Strings>
+		constexpr static auto ConcatTypeNames(const First& f, const Strings& ... strs)
+		{
+			return ConcatStrings(f, ConcatStrings(", ", ConcatTypeNames(strs...)));
 		}
 	};
 

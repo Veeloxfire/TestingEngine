@@ -1,6 +1,6 @@
 #pragma once
-#include "BooleanConstructs.h"
-#include "Traits.h"
+#include "Utility/BooleanConstructs.h"
+#include "Utility/Traits.h"
 #include "Array.h"
 
 namespace TypeNames
@@ -56,8 +56,19 @@ namespace TypeNames
 		constexpr static const char* name = Arr.Arr;
 	};
 
+#define TEMPLATE_TYPENAME_SPECIFIEDNAME(type, string)                                        \
+	template <typename ... T>                                                                \
+	struct TypeName<type<T...>> : public Testing::IsAllBaseOf<Testing::True, TypeName<T>...> \
+	{                                                                                        \
+		constexpr static Array AllTypes = ArrayFactory::ConcatTypeNames(TypeName<T>::Arr...);\
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(ArrayFactory::Make(string), \
+																  "<",                       \
+																  AllTypes,                  \
+																  ">");                      \
+		constexpr static const char* name = Arr.Arr;                                         \
+	}
 
-#define TYPENAME_SPECIFIEDNAME(type, string)\
+#define TYPENAME_SPECIFIEDNAME(type, string)                    \
 	template <>                                                 \
 	struct TypeName<type> : public Testing::True                \
 	{                                                           \
@@ -66,6 +77,7 @@ namespace TypeNames
 	}
 
 #define TYPENAME(type) TYPENAME_SPECIFIEDNAME(type, #type)
+#define TEMPLATE_TYPENAME(type) TEMPLATE_TYPENAME_SPECIFIEDNAME(type, #type)
 
 	//Fundamental Types
 	TYPENAME(void);

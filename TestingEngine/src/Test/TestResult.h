@@ -16,6 +16,8 @@ namespace Testing
 		ConstOf<Last> first;
 
 	public:
+		bool Failed() const {return first.AssertFailed(); }
+
 		constexpr TestResult(Last& F) : first(std::move(F))
 		{}
 		constexpr TestResult(const Last& F) : first(F)
@@ -31,6 +33,8 @@ namespace Testing
 
 		ConstOf<First> first;
 	public:
+		bool Failed() const { return first.AssertFailed() && TestResult<Rest...>::Failed(); }
+
 		constexpr TestResult(First& F, Rest& ... R) : first(std::move(F)), TestResult<Rest...>(R...)
 		{}
 		constexpr TestResult(const First& F, Rest& ... R) : first(F), TestResult<Rest...>(R...)
