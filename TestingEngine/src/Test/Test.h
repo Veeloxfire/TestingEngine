@@ -25,6 +25,9 @@ namespace Testing
 		}
 	};
 
+#define TEST_START(name) , ::Testing::Test(name, []()
+#define TEST_END )
+
 	template<typename T>
 	Test(const char* const name, const T t)->Test<T>;
 }

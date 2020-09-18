@@ -7,7 +7,13 @@ namespace Testing
 	{
 		Tests<Test...> m_Tests;
 	public:
+		constexpr Engine([[maybe_unused]] int dummy, Test&& ... t) : m_Tests(std::forward<Test>(t)...)
+		{}
+
 		constexpr Engine(Test&& ... t) : m_Tests(std::forward<Test>(t)...)
+		{}
+
+		constexpr Engine(Tests<Test...>&& t) : m_Tests(std::move(t))
 		{}
 
 		constexpr void RunAllTests() const
@@ -55,4 +61,13 @@ namespace Testing
 
 	template<typename ... Test>
 	Engine(Test&& ... t)->Engine<Test...>;
+
+	template<typename ... Test>
+	Engine(Tests<Test...>&& t)->Engine<Test...>;
+
+	template<typename ... Test>
+	Engine(int dummy, Test&& ... t)->Engine<Test...>;
+
+#define TESTS_START int main() { ::Testing::Engine _engine(0
+#define TESTS_END ); _engine.RunAllTests(); }
 }

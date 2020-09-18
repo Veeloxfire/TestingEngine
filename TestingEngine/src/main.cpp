@@ -15,6 +15,8 @@ struct Pair
 	A a;
 	B b;
 
+	constexpr Pair(A a_, B b_) : a(a_), b(b_) {}
+
 	friend bool operator == (const Pair<A, B>& p1, const Pair<A, B>& p2)
 	{
 		return p1.a == p2.a && p1.b == p2.b;
@@ -69,14 +71,21 @@ namespace Testing
 
 auto TestFunction()
 {
-	TwoInts a{ 1, 1 };
+
+}
+
+auto TestFunction2()
+{
+	TwoInts a{1, 1};
 	TwoInts b = TwoIntsFactory(1);
 
 	auto Test1 = Testing::Assert::AreEqual(a, b);
 	return Testing::TestResult(Test1);
 }
 
-auto TestFunction2()
+TESTS_START
+
+TEST_START("FirstTest")
 {
 	Pair<int, int> a{ 1, 1 };
 	Pair<int, int> b = PairFactory(1, 1);
@@ -84,11 +93,16 @@ auto TestFunction2()
 	auto Test1 = Testing::Assert::AreEqual(a, b);
 	return Testing::TestResult(Test1);
 }
+TEST_END
 
-int main()
+TEST_START("SecondTest")
 {
-	Testing::Engine engine(Testing::Test{ "FirstTest", &TestFunction}, Testing::Test{"SecondTest", &TestFunction2 });
+	Pair<int, int> a{ 1, 1 };
+	Pair<int, int> b = PairFactory(1, 1);
 
-	engine.RunAllTests();
-	return 0;
+	auto Test1 = Testing::Assert::AreEqual(a, b);
+	return Testing::TestResult(Test1);
 }
+TEST_END
+
+TESTS_END
