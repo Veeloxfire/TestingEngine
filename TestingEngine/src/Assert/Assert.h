@@ -24,11 +24,11 @@ namespace Testing
 		{
 			if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
 			{
-				return AssertWithoutMessage<AreEqualDetails<Type>>(std::move(Message), std::move(Expected), std::move(Actual));
+				return AssertWithMessage<AreEqualDetails<Type>>(std::move(Message), std::move(Expected), std::move(Actual));
 			}
 			else
 			{
-				return AssertWithoutMessage<AreEqualDetails<Type>>();
+				return AssertWithMessage<AreEqualDetails<Type>>(std::move(Message));
 			}
 		}
 	};

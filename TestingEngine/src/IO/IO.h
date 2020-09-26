@@ -11,8 +11,15 @@ namespace Testing
 	public:
 		using API = ConsoleIO;
 	private:
+		static API& GetMutableAPI();
 		static const API& GetAPI();
 	public:
+		static void IndentIn();
+		static void IndentInWithoutNewline();
+		static void IndentOut();
+
+		static void NewLine();
+
 		static void LogSuccess();
 		static void LogFailure();
 		static void LogString(const std::string& s);

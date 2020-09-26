@@ -26,13 +26,19 @@ namespace Testing
 	private:
 		void LogExpected() const
 		{
-			IO::LogStringAndNewline("Expected:");
+			IO::LogString("Expected:");
+
+			IO::IndentOut();
 			IO::LogObject(Expected);
+			IO::IndentIn();
 		}
 		void LogActual() const
 		{
-			IO::LogStringAndNewline("Actual:");
+			IO::LogString("Actual:");
+
+			IO::IndentOut();
 			IO::LogObject(Actual);
+			IO::IndentIn();
 		}
 	};
 }

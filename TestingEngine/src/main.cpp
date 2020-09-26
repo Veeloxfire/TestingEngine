@@ -1,9 +1,6 @@
 #include "Engine\Engine.h"
 #include "TypeNames\TypeName.h"
 #include "LogObject\LogObjectFactory.h"
-#include "Test\Test.h"
-
-#include "Module\Module.h"
 
 struct TwoInts
 {
@@ -92,40 +89,19 @@ ModuleTest(FirstTest)
 	Pair<int, int> a{ 1, 1 };
 	Pair<int, int> b = PairFactory(1, 1);
 
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
+	auto Test1 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+
+	a = {1, 1};
+	auto Test2 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+	return Testing::TestResult(Test1, Test2);
 }
 
 EndModule(Test(FirstTest))
 
 int main()
 {
-	ModuleName(Module) mod;
-	std::cout << mod.FirstTest_Name;
+	::Testing::Engine<Module_Module> engine{Module_Module()};
+	engine.RunAllModules();
 	return 0;
 }
 
-
-//TESTS_START
-//
-//TEST_START("FirstTest")
-//{
-//	Pair<int, int> a{ 1, 1 };
-//	Pair<int, int> b = PairFactory(1, 1);
-//
-//	auto Test1 = Testing::Assert::AreEqual(a, b);
-//	return Testing::TestResult(Test1);
-//}
-//TEST_END
-//
-//TEST_START("SecondTest")
-//{
-//	Pair<int, int> a{ 1, 1 };
-//	Pair<int, int> b = PairFactory(1, 1);
-//
-//	auto Test1 = Testing::Assert::AreEqual(a, b);
-//	return Testing::TestResult(Test1);
-//}
-//TEST_END
-//
-//TESTS_END

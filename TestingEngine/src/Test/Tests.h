@@ -2,41 +2,35 @@
 #include "Test.h"
 namespace Testing
 {
-	template<typename ... TestObjs>
+	template<IsTest ... TestObjs>
 	class Tests;
 
-	template<typename First, typename ... Rest>
+	template<IsTest First, IsTest ... Rest>
 	class Tests<First, Rest...> : public Tests<Rest...>
 	{
-		using FirstNoRef = RemoveReference<First>;
-
-		static_assert(IsBaseOf<TestBase, FirstNoRef>::value, "Must be a test type");
-		FirstNoRef first;
+		First first;
 		
 	public:
 		constexpr Tests(First&& f, Rest&&... r)
 			: first(std::forward<First>(f)), Tests<Rest...>(std::forward<Rest>(r)...)
 		{}
 
-		const FirstNoRef& GetFirst() const { return first; }
+		const First& GetFirst() const { return first; }
 	};
 
-	template<typename First>
+	template<IsTest First>
 	class Tests<First>
 	{
-		using FirstNoRef = RemoveReference<First>;
-
-		static_assert(IsBaseOf<TestBase, FirstNoRef>::value, "Must be a test type");
-		FirstNoRef first;
+		First first;
 
 	public:
 		constexpr Tests(First&& f)
 			: first(std::forward<First>(f))
 		{}
 
-		const FirstNoRef& GetFirst() const { return first; }
+		const First& GetFirst() const { return first; }
 	};
 
-	template<typename ... TestObjs>
-	Tests(TestObjs&& ... ts)->Tests<TestObjs...>;
+	template<IsTest ... TestObjs>
+	Tests(TestObjs&& ... ts)->Tests<RemoveReference<TestObjs>...>;
 }

@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\$(ProjectName)\src</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\$(ProjectName)\src</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +156,7 @@
     <ClInclude Include="src\LogObject\LogObject.h" />
     <ClInclude Include="src\LogObject\LogObjectFactory.h" />
     <ClInclude Include="src\Module\Module.h" />
+    <ClInclude Include="src\Module\Modules.h" />
     <ClInclude Include="src\Test\Test.h" />
     <ClInclude Include="src\Test\TestResult.h" />
     <ClInclude Include="src\Test\Tests.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="src\Utility\Optional.h" />
     <ClInclude Include="src\Utility\Traits.h" />
     <ClInclude Include="src\TypeNames\TypeName.h" />
+    <ClInclude Include="src\Utility\Tuple.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IO\ConsoleIO.cpp" />

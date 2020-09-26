@@ -4,6 +4,9 @@
 namespace Testing
 {
 	class ModuleBase {};
+
+	template<typename T>
+	concept IsModule = IsBaseOf<ModuleBase, T>::value;
 }
 
 #define ModuleName(Name) Module_ ## Name
@@ -18,8 +21,11 @@ namespace Testing
 #define EndModule(...)\
 		;\
 		constexpr static ::Testing::Tests m_Tests{__VA_ARGS__};\
-		constexpr const decltype(m_Tests)& GetTests() { return m_Tests; }\
+		constexpr const decltype(m_Tests)& GetTests() const { return m_Tests; }\
+		constexpr const char* GetName() const { return Module_Name; }\
 	};
+
+#define ModuleObj(Name) ModuleName(Name) ()
 
 #define TestName(Name) Name ## _Name
 #define	TestLambda(Name) Name ## _Test

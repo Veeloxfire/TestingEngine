@@ -30,4 +30,8 @@ namespace Testing
 
 	template<unsigned int NameLength, typename T>
 	Test(const char(&name)[NameLength], const T t)->Test<NameLength, T>;
+
+
+	template<typename T>
+	concept IsTest = IsBaseOf<TestBase, T>::value;
 }

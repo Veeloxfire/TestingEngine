@@ -1,42 +1,59 @@
 #pragma once
-#include "Test\Tests.h"
+#include "Module\Modules.h"
 namespace Testing
 {
-	template<typename ... Modules>
+	template<typename ... Module>
 	class Engine
 	{
-		Tests<Test...> m_Tests;
+		Modules<Module...> m_Modules;
 	public:
-		constexpr Engine([[maybe_unused]] int dummy, Test&& ... t) : m_Tests(std::forward<Test>(t)...)
+		constexpr Engine(Module&& ... m) : m_Modules(std::forward<Module>(m)...)
 		{}
 
-		constexpr Engine(Test&& ... t) : m_Tests(std::forward<Test>(t)...)
-		{}
-
-		constexpr Engine(Tests<Test...>&& t) : m_Tests(std::move(t))
-		{}
-
-		constexpr void RunAllTests() const
+		constexpr void RunAllModules() const
 		{
-			RecurseAllTests(m_Tests);
+			RecurseAllModules(m_Modules);
 		}
 
 	private:
 		template<typename First, typename ... Rest>
-		constexpr void RecurseAllTests(const Tests<First, Rest...>& tests) const
+		static constexpr void RecurseAllModules(const Modules<First, Rest...>& modules)
+		{
+			RunModule(modules.GetFirst());
+			RecurseAllModules<Rest...>(modules);
+		}
+
+		template<typename First>
+		static constexpr void RecurseAllModules(const Modules<First>& modules)
+		{
+			RunModule(modules.GetFirst());
+		}
+
+		template<typename Mod>
+		static constexpr void RunModule(const Mod& m)
+		{
+			IO::LogString(m.GetName());
+
+			IO::IndentOut();
+			RecurseAllTests(m.GetTests());
+			IO::IndentIn();
+		}
+
+		template<typename First, typename ... Rest>
+		static constexpr void RecurseAllTests(const Tests<First, Rest...>& tests)
 		{
 			RunTest(tests.GetFirst());
 			RecurseAllTests<Rest...>(tests);
 		}
 
 		template<typename First>
-		constexpr void RecurseAllTests(const Tests<First>& tests) const
+		static constexpr void RecurseAllTests(const Tests<First>& tests)
 		{
 			RunTest(tests.GetFirst());
 		}
 
 		template<typename TestObj>
-		void RunTest(const TestObj& test) const
+		static constexpr void RunTest(const TestObj& test)
 		{
 			IO::LogString(test.GetName());
 			IO::LogString(" - ");
@@ -44,12 +61,15 @@ namespace Testing
 		}
 
 		template<typename TestResult>
-		void AnalyseResult(const TestResult& test) const
+		static constexpr void AnalyseResult(const TestResult& test)
 		{
 			if (test.Failed())
 			{
 				IO::LogFailure();
+
+				IO::IndentOut();
 				IO::LogTestResult(test);
+				IO::IndentIn();
 			}
 			else
 			{
@@ -59,15 +79,6 @@ namespace Testing
 
 	};
 
-	template<typename ... Test>
-	Engine(Test&& ... t)->Engine<Test...>;
-
-	template<typename ... Test>
-	Engine(Tests<Test...>&& t)->Engine<Test...>;
-
-	template<typename ... Test>
-	Engine(int dummy, Test&& ... t)->Engine<Test...>;
-
-#define TESTS_START int main() { ::Testing::Engine _engine(0
-#define TESTS_END ); _engine.RunAllTests(); }
+	template<typename ... Module>
+	Engine(Module&& ... m)->Engine<Module...>;
 }
