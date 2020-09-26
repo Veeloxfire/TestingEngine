@@ -155,6 +155,7 @@
     <ClInclude Include="src\IO\IO.h" />
     <ClInclude Include="src\LogObject\LogObject.h" />
     <ClInclude Include="src\LogObject\LogObjectFactory.h" />
+    <ClInclude Include="src\Module\Module.h" />
     <ClInclude Include="src\Test\Test.h" />
     <ClInclude Include="src\Test\TestResult.h" />
     <ClInclude Include="src\Test\Tests.h" />

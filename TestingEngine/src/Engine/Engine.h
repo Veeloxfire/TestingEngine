@@ -2,7 +2,7 @@
 #include "Test\Tests.h"
 namespace Testing
 {
-	template<typename ... Test>
+	template<typename ... Modules>
 	class Engine
 	{
 		Tests<Test...> m_Tests;

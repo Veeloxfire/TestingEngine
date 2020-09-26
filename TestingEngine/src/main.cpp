@@ -3,6 +3,8 @@
 #include "LogObject\LogObjectFactory.h"
 #include "Test\Test.h"
 
+#include "Module\Module.h"
+
 struct TwoInts
 {
 	int a;
@@ -83,9 +85,9 @@ auto TestFunction2()
 	return Testing::TestResult(Test1);
 }
 
-TESTS_START
+StartModule(Module)
 
-TEST_START("FirstTest")
+ModuleTest(FirstTest)
 {
 	Pair<int, int> a{ 1, 1 };
 	Pair<int, int> b = PairFactory(1, 1);
@@ -93,16 +95,37 @@ TEST_START("FirstTest")
 	auto Test1 = Testing::Assert::AreEqual(a, b);
 	return Testing::TestResult(Test1);
 }
-TEST_END
 
-TEST_START("SecondTest")
+EndModule(Test(FirstTest))
+
+int main()
 {
-	Pair<int, int> a{ 1, 1 };
-	Pair<int, int> b = PairFactory(1, 1);
-
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
+	ModuleName(Module) mod;
+	std::cout << mod.FirstTest_Name;
+	return 0;
 }
-TEST_END
 
-TESTS_END
+
+//TESTS_START
+//
+//TEST_START("FirstTest")
+//{
+//	Pair<int, int> a{ 1, 1 };
+//	Pair<int, int> b = PairFactory(1, 1);
+//
+//	auto Test1 = Testing::Assert::AreEqual(a, b);
+//	return Testing::TestResult(Test1);
+//}
+//TEST_END
+//
+//TEST_START("SecondTest")
+//{
+//	Pair<int, int> a{ 1, 1 };
+//	Pair<int, int> b = PairFactory(1, 1);
+//
+//	auto Test1 = Testing::Assert::AreEqual(a, b);
+//	return Testing::TestResult(Test1);
+//}
+//TEST_END
+//
+//TESTS_END

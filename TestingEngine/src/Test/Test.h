@@ -1,33 +1,33 @@
 #pragma once
-
+#include "TypeNames\Array.h"
 #include "Assert\Assert.h"
 #include "TestResult.h"
+
 namespace Testing
 {
 	class TestBase {};
 
-	template<typename TestFunction>
+	template<unsigned int NameLength, typename TestFunction>
 	class Test : public TestBase
 	{
 		using ReturnType = ReturnTypeOf<TestFunction>;
 
 		static_assert(IsBaseOf<TestResultBase, ReturnType>::value, "Function Must Return TestResult");
 
-		const char* const m_TestName;
+		const TypeNames::Array<char, NameLength> m_TestName;
 		const TestFunction m_TestFunction;
-	public: 
-		constexpr Test(const char* const name, const TestFunction test) : m_TestName(name), m_TestFunction(test) {}
+	public:
+		constexpr Test(const char (&name)[NameLength], const TestFunction test)
+			: m_TestName{ TypeNames::ArrayFactory::Make(name) }, m_TestFunction{test}
+		{}
 
-		const char* GetName() const { return m_TestName; }
-		ReturnType operator()() const
+		constexpr const char* GetName() const { return m_TestName.Arr; }
+		constexpr ReturnType operator()() const
 		{
 			return m_TestFunction();
 		}
 	};
 
-#define TEST_START(name) , ::Testing::Test(name, []()
-#define TEST_END )
-
-	template<typename T>
-	Test(const char* const name, const T t)->Test<T>;
+	template<unsigned int NameLength, typename T>
+	Test(const char(&name)[NameLength], const T t)->Test<NameLength, T>;
 }
