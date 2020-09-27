@@ -58,6 +58,7 @@ namespace Testing
 			IO::LogString(test.GetName());
 			IO::LogString(" - ");
 			AnalyseResult(test());
+			IO::NewLine();
 		}
 
 		template<typename TestResult>

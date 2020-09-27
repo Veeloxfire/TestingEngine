@@ -68,20 +68,6 @@ namespace Testing
 	};
 }
 
-auto TestFunction()
-{
-
-}
-
-auto TestFunction2()
-{
-	TwoInts a{1, 1};
-	TwoInts b = TwoIntsFactory(1);
-
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
-}
-
 StartModule(Module)
 
 ModuleTest(FirstTest)
@@ -96,11 +82,23 @@ ModuleTest(FirstTest)
 	return Testing::TestResult(Test1, Test2);
 }
 
-EndModule(Test(FirstTest))
+ModuleTest(SecondTest)
+{
+	Pair<int, int> a{ 1, 2 };
+	Pair<int, int> b = PairFactory(1, 1);
+
+	auto Test1 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+
+	a = { 1, 1 };
+	auto Test2 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+	return Testing::TestResult(Test1, Test2);
+}
+
+EndModule(Test(FirstTest), Test(SecondTest))
 
 int main()
 {
-	::Testing::Engine<Module_Module> engine{Module_Module()};
+	::Testing::Engine engine{ModuleObj(Module)};
 	engine.RunAllModules();
 	return 0;
 }

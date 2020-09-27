@@ -10,6 +10,7 @@ namespace Testing
 }
 
 #define ModuleName(Name) Module_ ## Name
+#define ModuleObj(Name) ModuleName(Name)()
 
 #define StartModule(Name)\
 	class ModuleName(Name) : public ::Testing::ModuleBase\
@@ -25,7 +26,6 @@ namespace Testing
 		constexpr const char* GetName() const { return Module_Name; }\
 	};
 
-#define ModuleObj(Name) ModuleName(Name) ()
 
 #define TestName(Name) Name ## _Name
 #define	TestLambda(Name) Name ## _Test
