@@ -78,9 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\bin-int\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\bin-int\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,8 +120,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\$(ProjectName)\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,8 +139,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\$(ProjectName)\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,33 +153,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Assert\Assert.h" />
-    <ClInclude Include="src\Assert\AssertResultAPI.h" />
-    <ClInclude Include="src\Assert\AssertResultDetails.h" />
-    <ClInclude Include="src\Assert\AssertResults.h" />
-    <ClInclude Include="src\Engine\Engine.h" />
-    <ClInclude Include="src\Engine\EngineAPI.h" />
-    <ClInclude Include="src\IO\ConsoleIO.h" />
-    <ClInclude Include="src\IO\IO.h" />
-    <ClInclude Include="src\LogObject\LogObject.h" />
-    <ClInclude Include="src\LogObject\LogObjectFactory.h" />
-    <ClInclude Include="src\Module\Module.h" />
-    <ClInclude Include="src\Module\Modules.h" />
-    <ClInclude Include="src\Test\Test.h" />
-    <ClInclude Include="src\Test\TestResult.h" />
-    <ClInclude Include="src\Test\Tests.h" />
-    <ClInclude Include="src\Utility\BooleanConstructs.h" />
-    <ClInclude Include="src\TypeNames\Array.h" />
-    <ClInclude Include="src\Utility\Allocator.h" />
-    <ClInclude Include="src\Utility\Optional.h" />
-    <ClInclude Include="src\Utility\Traits.h" />
-    <ClInclude Include="src\TypeNames\TypeName.h" />
-    <ClInclude Include="src\Utility\Tuple.h" />
+    <ClInclude Include="include\Assert\Assert.h" />
+    <ClInclude Include="include\Assert\AssertResultAPI.h" />
+    <ClInclude Include="include\Assert\AssertResultDetails.h" />
+    <ClInclude Include="include\Assert\AssertResults.h" />
+    <ClInclude Include="include\Engine\Engine.h" />
+    <ClInclude Include="include\Engine\EngineAPI.h" />
+    <ClInclude Include="include\IO\ConsoleIO.h" />
+    <ClInclude Include="include\IO\IO.h" />
+    <ClInclude Include="include\LogObject\LogObject.h" />
+    <ClInclude Include="include\LogObject\LogObjectFactory.h" />
+    <ClInclude Include="include\Module\Module.h" />
+    <ClInclude Include="include\Module\Modules.h" />
+    <ClInclude Include="include\TE.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="include\Test\Test.h" />
+    <ClInclude Include="include\Test\TestResult.h" />
+    <ClInclude Include="include\Test\Tests.h" />
+    <ClInclude Include="include\Utility\BooleanConstructs.h" />
+    <ClInclude Include="include\TypeNames\Array.h" />
+    <ClInclude Include="include\Utility\Allocator.h" />
+    <ClInclude Include="include\Utility\Optional.h" />
+    <ClInclude Include="include\Utility\Traits.h" />
+    <ClInclude Include="include\TypeNames\TypeName.h" />
+    <ClInclude Include="include\Utility\Tuple.h" />
+    <ClInclude Include="include\pch.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IO\ConsoleIO.cpp" />
     <ClCompile Include="src\IO\IO.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

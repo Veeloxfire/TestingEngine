@@ -1,6 +1,5 @@
-#include "Engine\Engine.h"
-#include "TypeNames\TypeName.h"
-#include "LogObject\LogObjectFactory.h"
+//EXAMPLE MAIN
+#include "pch.hpp"
 
 struct TwoInts
 {
