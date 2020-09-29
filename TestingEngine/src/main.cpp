@@ -84,10 +84,10 @@ ModuleTest(FirstTest)
 
 ModuleTest(SecondTest)
 {
-	Pair<int, int> a{ 1, 2 };
-	Pair<int, int> b = PairFactory(1, 1);
+	TwoInts a{ 1, 2 };
+	TwoInts b = TwoIntsFactory(1);
 
-	auto Test1 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+	auto Test1 = Testing::Assert::AreNotEqual(a, b, "a and b should not be equal");
 
 	a = { 1, 1 };
 	auto Test2 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
