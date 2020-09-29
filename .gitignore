@@ -6,9 +6,9 @@
 
 
 # Others
-*.sln
-*.vcxproj
-*.filters
+**.sln
+**.vcxproj
+**.filters
 
 
 
