@@ -9,53 +9,25 @@ namespace Testing
 		template <typename Type>
 		constexpr static auto AreEqual(Type Expected, Type Actual)
 		{
-			if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
-			{
-				return AssertWithoutMessage<AreEqualDetails<Type>>(std::move(Expected), std::move(Actual));
-			}
-			else
-			{
-				return AssertWithoutMessage<AreEqualDetails<Type>>();
-			}
+			return AssertWithoutMessage<AreEqualDetails<Type>>::AssertCheck(std::move(Expected), std::move(Actual));
 		}
 
 		template <typename Type>
 		constexpr static auto AreEqual(Type Expected, Type Actual, std::string Message)
 		{
-			if (!(Expected == Actual))//!(... == ...) rather than (... != ...) to test correct operator
-			{
-				return AssertWithMessage<AreEqualDetails<Type>>(std::move(Message), std::move(Expected), std::move(Actual));
-			}
-			else
-			{
-				return AssertWithMessage<AreEqualDetails<Type>>(std::move(Message));
-			}
+			return AssertWithMessage<AreEqualDetails<Type>>::AssertCheck(std::move(Message), std::move(Expected), std::move(Actual));
 		}
 
 		template <typename Type>
 		constexpr static auto AreNotEqual(Type Expected, Type Actual)
 		{
-			if (!(Expected != Actual))//!(... != ...) rather than (... == ...) to test correct operator
-			{
-				return AssertWithoutMessage<AreNotEqualDetails<Type>>(std::move(Expected), std::move(Actual));
-			}
-			else
-			{
-				return AssertWithoutMessage<AreNotEqualDetails<Type>>();
-			}
+			return AssertWithoutMessage<AreNotEqualDetails<Type>>::AssertCheck(std::move(Expected), std::move(Actual));
 		}
 
 		template <typename Type>
 		constexpr static auto AreNotEqual(Type Expected, Type Actual, std::string Message)
 		{
-			if (!(Expected != Actual))//!(... != ...) rather than (... == ...) to test correct operator
-			{
-				return AssertWithMessage<AreNotEqualDetails<Type>>(std::move(Message), std::move(Expected), std::move(Actual));
-			}
-			else
-			{
-				return AssertWithMessage<AreNotEqualDetails<Type>>(std::move(Message));
-			}
+			return AssertWithMessage<AreNotEqualDetails<Type>>::AssertCheck(std::move(Message), std::move(Expected), std::move(Actual));
 		}
 	};
 }

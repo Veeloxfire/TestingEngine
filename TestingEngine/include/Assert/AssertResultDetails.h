@@ -7,11 +7,11 @@ namespace Testing
 	template <typename Type>
 	class ComparisonDetails
 	{
+	public:
 		Type Expected;
 		Type Actual;
-
 	public:
-		ComparisonDetails(Type&& e, Type&& a)
+		constexpr ComparisonDetails(Type&& e, Type&& a)
 			:Expected(std::forward<Type>(e)), Actual(std::forward<Type>(a))
 		{}
 
@@ -47,9 +47,14 @@ namespace Testing
 	public:
 		constexpr static const char* Name = "AreEqual";
 
-		AreEqualDetails(Type&& e, Type&& a)
+		constexpr AreEqualDetails(Type&& e, Type&& a)
 			: ComparisonDetails<Type>(std::forward<Type>(e), std::forward<Type>(a))
-		{}		
+		{}
+
+		inline static constexpr bool AssertBool(const Type& e, const Type& a)
+		{
+			return e == a;
+		}
 	};
 
 	template <typename Type>
@@ -58,8 +63,13 @@ namespace Testing
 	public:
 		constexpr static const char* Name = "AreNotEqual";
 
-		AreNotEqualDetails(Type&& e, Type&& a)
+		constexpr AreNotEqualDetails(Type&& e, Type&& a)
 			: ComparisonDetails<Type>(std::forward<Type>(e), std::forward<Type>(a))
 		{}
+
+		inline static constexpr bool AssertBool(const Type& e, const Type& a)
+		{
+			return e != a;
+		}
 	};
 }

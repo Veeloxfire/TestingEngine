@@ -67,12 +67,12 @@ namespace Testing
 			: details()
 		{}
 
-		bool AssertFailed() const override { return details.HasValue(); }
-
 		template<typename ... Ts>
 		AssertWithoutMessage(Ts&& ... ts)
 			: details(std::forward<Ts>(ts)...)
 		{}
+
+		bool AssertFailed() const override { return details.HasValue(); }
 
 		void LogAssertContents() const override
 		{
@@ -82,6 +82,19 @@ namespace Testing
 		std::string GetAssertType() const override final
 		{
 			return AssertType::Name;
+		}
+
+		template<typename ... Ts>
+		static constexpr AssertWithoutMessage<AssertType> AssertCheck(Ts&& ... ts)
+		{
+			if (AssertType::AssertBool(ts...))
+			{
+				return AssertWithoutMessage<AssertType>();
+			}
+			else
+			{
+				return AssertWithoutMessage<AssertType>(std::forward<Ts>(ts)...);
+			}
 		}
 	};
 
@@ -113,6 +126,19 @@ namespace Testing
 		{
 			LogErrorMessage();
 			this->details->LogDetails();
+		}
+
+		template<typename ... Ts>
+		static constexpr AssertWithMessage<AssertType> AssertCheck(std::string&& Message, Ts&& ... ts)
+		{
+			if (AssertType::AssertBool(ts...))
+			{
+				return AssertWithMessage<AssertType>(std::move(Message));
+			}
+			else
+			{
+				return AssertWithMessage<AssertType>(std::move(Message), std::forward<Ts>(ts)...);
+			}
 		}
 	};
 
