@@ -117,4 +117,3 @@ namespace Testing
 	LogObjectFactoryForWholeType(double);
 	LogObjectFactoryForWholeType(long double);
 }
-}
