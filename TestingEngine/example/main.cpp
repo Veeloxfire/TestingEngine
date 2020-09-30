@@ -97,8 +97,7 @@ EndModule(Test(FirstTest), Test(SecondTest))
 
 int main()
 {
-	::Testing::Engine engine{ModuleObj(Module)};
-	engine.RunAllModules();
+	::Testing::TestModules(ModuleObj(Module));
 	return 0;
 }
 

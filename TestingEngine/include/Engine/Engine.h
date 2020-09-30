@@ -82,4 +82,11 @@ namespace Testing
 
 	template<typename ... Module>
 	Engine(Module&& ... m)->Engine<Module...>;
+
+	template<typename ... Modules>
+	void TestModules(Modules&&...ms)
+	{
+		Engine engine(std::forward<Modules>(ms)...);
+		engine.RunAllModules();
+	}
 }
