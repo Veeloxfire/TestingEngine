@@ -1,7 +1,7 @@
 #pragma once
 #include "LogObject.h"
 
-#include "Utility/BooleanConstructs.h"
+#include "../Utility/BooleanConstructs.h"
 
 #include <string>
 #include <sstream>

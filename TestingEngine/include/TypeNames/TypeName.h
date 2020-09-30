@@ -1,6 +1,6 @@
 #pragma once
-#include "Utility/BooleanConstructs.h"
-#include "Utility/Traits.h"
+#include "../Utility/BooleanConstructs.h"
+#include "../Utility/Traits.h"
 #include "Array.h"
 
 namespace TypeNames

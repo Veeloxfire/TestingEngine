@@ -1,6 +1,6 @@
 #pragma once
-#include "Assert\AssertResultAPI.h"
-#include "Utility\Traits.h"
+#include "..\Assert\AssertResultAPI.h"
+#include "..\Utility\Traits.h"
 namespace Testing
 {
 	class TestResultBase {};

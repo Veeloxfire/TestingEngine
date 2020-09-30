@@ -1,5 +1,5 @@
 //EXAMPLE MAIN
-#include "TE.hpp"
+#include "../TE.hpp"
 
 struct TwoInts
 {

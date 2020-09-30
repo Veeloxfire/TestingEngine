@@ -1,5 +1,5 @@
 #pragma once
-#include "TypeNames/TypeName.h"
+#include "../TypeNames/TypeName.h"
 #include <utility>
 namespace Testing
 {

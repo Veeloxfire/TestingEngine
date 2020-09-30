@@ -1,11 +1,11 @@
 #pragma once
-#include "Utility\Traits.h"
-#include "Utility\Optional.h"
+#include "..\Utility\Traits.h"
+#include "..\Utility\Optional.h"
 
 #include "AssertResultAPI.h"
 #include "AssertResultDetails.h"
 
-#include "IO\IO.h"
+#include "..\IO\IO.h"
 #include <string>
 
 namespace Testing

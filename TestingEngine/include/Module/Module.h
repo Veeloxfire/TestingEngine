@@ -1,5 +1,5 @@
 #pragma once
-#include "Test\Tests.h"
+#include "..\Test\Tests.h"
 
 namespace Testing
 {

@@ -1,7 +1,7 @@
 #pragma once
-#include "Assert\AssertResultAPI.h"
-#include "LogObject\LogObject.h"
-#include "Test\TestResult.h"
+#include "..\Assert\AssertResultAPI.h"
+#include "..\LogObject\LogObject.h"
+#include "..\Test\TestResult.h"
 
 #include <string>
 #include <sstream>

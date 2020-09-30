@@ -1,6 +1,6 @@
 #pragma once
-#include "TypeNames\Array.h"
-#include "Assert\Assert.h"
+#include "../TypeNames/Array.h"
+#include "../Assert/Assert.h"
 #include "TestResult.h"
 
 namespace Testing

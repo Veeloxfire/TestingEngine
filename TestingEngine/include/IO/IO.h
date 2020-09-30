@@ -1,6 +1,6 @@
 #pragma once
 #include "ConsoleIO.h"
-#include "LogObject\LogObjectFactory.h"
+#include "..\LogObject\LogObjectFactory.h"
 
 #include <string>
 
