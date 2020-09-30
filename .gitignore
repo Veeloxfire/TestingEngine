@@ -7,8 +7,8 @@
 
 # Others
 *.sln
-**.vcxproj
-**.vcxproj.filters
+*.vcxproj
+*.filters
 
 
 
