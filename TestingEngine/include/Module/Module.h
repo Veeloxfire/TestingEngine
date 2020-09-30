@@ -10,7 +10,7 @@ namespace Testing
 }
 
 #define ModuleName(Name) Module_ ## Name
-#define ModuleObj(Name) ModuleName(Name)()
+#define Module(Name) ModuleName(Name)()
 
 #define StartModule(Name)\
 	class ModuleName(Name) : public ::Testing::ModuleBase\

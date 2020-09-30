@@ -79,7 +79,42 @@ namespace Testing
 	public:
 		constexpr static decltype(auto) Build(const Input& i)
 		{
-			return LogObjectFactoryBackend::Build(i);
+			return LogObjectFactoryBackend<Input>::Build(i);
 		}
 	};
+
+#define LogObjectFactoryForWholeType(Type)\
+	template <>\
+	class LogObjectFactory<Type>\
+	{\
+	public:\
+		constexpr static decltype(auto) Build(const Type& i)\
+		{\
+			return LogObjectFactoryBackend<int>::Build(i);\
+		}\
+	}
+
+	//Fundamental Types
+	LogObjectFactoryForWholeType(bool);
+
+	LogObjectFactoryForWholeType(short);
+	LogObjectFactoryForWholeType(unsigned short);
+	LogObjectFactoryForWholeType(int);
+	LogObjectFactoryForWholeType(unsigned int);
+	LogObjectFactoryForWholeType(long);
+	LogObjectFactoryForWholeType(unsigned long);
+	LogObjectFactoryForWholeType(long long);
+	LogObjectFactoryForWholeType(unsigned long long);
+
+	LogObjectFactoryForWholeType(char);
+	LogObjectFactoryForWholeType(unsigned char);
+	LogObjectFactoryForWholeType(signed char);
+	LogObjectFactoryForWholeType(wchar_t);
+	LogObjectFactoryForWholeType(char16_t);
+	LogObjectFactoryForWholeType(char32_t);
+
+	LogObjectFactoryForWholeType(float);
+	LogObjectFactoryForWholeType(double);
+	LogObjectFactoryForWholeType(long double);
+}
 }

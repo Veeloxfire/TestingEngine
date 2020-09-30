@@ -67,17 +67,16 @@ namespace Testing
 			: details()
 		{}
 
-		template<typename ... Ts>
-		constexpr AssertWithoutMessage(Ts&& ... ts)
-			: details(std::forward<Ts>(ts)...)
+		constexpr AssertWithoutMessage(AssertType&& d)
+			: details(std::forward<AssertType>(d))
 		{}
-
-		[[nodiscard]] bool AssertFailed() const override { return details.HasValue(); }
 
 		void LogAssertContents() const override
 		{
 			details->LogDetails();
 		}
+
+		[[nodiscard]] bool AssertFailed() const override { return details.HasValue(); }
 
 		[[nodiscard]] std::string GetAssertType() const override final
 		{
@@ -93,7 +92,7 @@ namespace Testing
 			}
 			else
 			{
-				return AssertWithoutMessage<AssertType>(std::forward<Ts>(ts)...);
+				return AssertWithoutMessage<AssertType>(AssertType(std::forward<Ts>(ts)...));
 			}
 		}
 	};
@@ -112,14 +111,12 @@ namespace Testing
 		}
 
 	public:
-		template<typename ... Ts>
 		constexpr AssertWithMessage(std::string&& Message)
 			: ErrorMessage(std::move(Message)), AssertWithoutMessage<AssertType>()
 		{}
 
-		template<typename ... Ts>
-		constexpr AssertWithMessage(std::string&& Message, Ts&& ... ts)
-			: ErrorMessage(std::move(Message)), AssertWithoutMessage<AssertType>(std::forward<Ts>(ts)...)
+		constexpr AssertWithMessage(std::string&& Message, AssertType&& d)
+			: ErrorMessage(std::move(Message)), AssertWithoutMessage<AssertType>(std::move(d))
 		{}
 
 		void LogAssertContents() const override final
@@ -137,7 +134,7 @@ namespace Testing
 			}
 			else
 			{
-				return AssertWithMessage<AssertType>(std::move(Message), std::forward<Ts>(ts)...);
+				return AssertWithMessage<AssertType>(std::move(Message), AssertType(std::forward<Ts>(ts)...));
 			}
 		}
 	};

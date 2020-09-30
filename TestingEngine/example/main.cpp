@@ -67,7 +67,7 @@ namespace Testing
 	};
 }
 
-StartModule(Module)
+StartModule(Module1)
 
 ModuleTest(FirstTest)
 {
@@ -95,9 +95,20 @@ ModuleTest(SecondTest)
 
 EndModule(Test(FirstTest), Test(SecondTest))
 
+
+StartModule(Module2)
+
+ModuleTest(ThirdTest)
+{
+	auto Test1 = Testing::Assert::AreSameType<int, double>();
+	return Testing::TestResult(Test1);
+}
+
+EndModule(Test(ThirdTest))
+
 int main()
 {
-	::Testing::TestModules(ModuleObj(Module));
+	::Testing::TestModules(Module(Module1), Module(Module2));
 	return 0;
 }
 
