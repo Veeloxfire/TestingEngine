@@ -51,7 +51,7 @@ namespace Testing
 			: ComparisonDetails<Type>(std::forward<Type>(e), std::forward<Type>(a))
 		{}
 
-		inline static constexpr bool AssertBool(const Type& e, const Type& a)
+		[[nodiscard]] static constexpr bool AssertBool(const Type& e, const Type& a)
 		{
 			return e == a;
 		}
@@ -67,7 +67,7 @@ namespace Testing
 			: ComparisonDetails<Type>(std::forward<Type>(e), std::forward<Type>(a))
 		{}
 
-		inline static constexpr bool AssertBool(const Type& e, const Type& a)
+		[[nodiscard]] static constexpr bool AssertBool(const Type& e, const Type& a)
 		{
 			return e != a;
 		}
