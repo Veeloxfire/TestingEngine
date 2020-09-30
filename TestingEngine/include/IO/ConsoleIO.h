@@ -11,22 +11,83 @@ namespace Testing
 {
 	class ConsoleIO
 	{
-		unsigned int m_Indents = 0;
-		void LogIndent() const;
-		void LogIndent(std::ostream& stream) const;
-	public:
-		void IndentOut();
-		void IndentIn();
-		void IndentInWithoutNewline();
+		mutable unsigned int m_Indents = 0;
 
-		void LogSuccess() const;
-		void LogFailure() const;
-		void LogString(const std::string& s) const;
-		void Newline() const;
-		void Newline(std::ostream& stream) const;
-		void Flush() const;
-		void Endline() const;
-		void LogAssert(const AssertResultAPI& res) const;
+		void LogIndent() const
+		{
+			for (unsigned int i = 0; i < m_Indents; i++)
+			{
+				std::cout << "  "; //Indent is 2 spaces for now
+			}
+		}
+
+		void LogIndent(std::ostream& stream) const
+		{
+			for (unsigned int i = 0; i < m_Indents; i++)
+			{
+				stream << "  "; //Indent is 2 spaces for now
+			}
+		}
+	public:
+		void IndentOut() const
+		{
+			m_Indents++;
+			Newline();
+		}
+
+		void IndentIn() const
+		{
+			IndentInWithoutNewline();
+			Newline();
+		}
+
+		void IndentInWithoutNewline() const
+		{
+			m_Indents--;
+		}
+
+		void LogSuccess() const
+		{
+			std::cout << "Test Succeeded!";
+		}
+
+		void LogFailure() const
+		{
+			std::cout << "Test Failed!";
+		}
+
+		void LogString(const std::string& s) const
+		{
+			std::cout << s;
+		}
+
+		void Newline() const
+		{
+			std::cout << '\n';
+			LogIndent();
+		}
+
+		void Newline(std::ostream& stream) const
+		{
+			stream << '\n';
+			LogIndent();
+		}
+
+		void Flush() const
+		{
+			std::cout << std::flush;
+		}
+
+		void Endline() const
+		{
+			std::cout << std::endl;
+			LogIndent();
+		}
+
+		void LogAssert(const AssertResultAPI& res) const
+		{
+			res.LogAssert();
+		}
 
 		template<typename Top, typename ... Types>
 		void LogObject(const LogObject<Top, Types...>& log) const

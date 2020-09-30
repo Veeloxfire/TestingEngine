@@ -11,19 +11,51 @@ namespace Testing
 	public:
 		using API = ConsoleIO;
 	private:
-		static API& GetMutableAPI();
-		static const API& GetAPI();
+		static const IO::API& GetAPI()
+		{
+			static const API io = {};
+			return io;
+		}
 	public:
-		static void IndentIn();
-		static void IndentInWithoutNewline();
-		static void IndentOut();
+		static void IndentIn()
+		{
+			GetAPI().IndentIn();
+		}
 
-		static void NewLine();
+		static void IndentInWithoutNewline()
+		{
+			GetAPI().IndentInWithoutNewline();
+		}
 
-		static void LogSuccess();
-		static void LogFailure();
-		static void LogString(const std::string& s);
-		static void LogStringAndNewline(const std::string& s);
+		static void IndentOut()
+		{
+			GetAPI().IndentOut();
+		}
+		static void NewLine()
+		{
+			GetAPI().Newline();
+		}
+
+		static void LogSuccess()
+		{
+			GetAPI().LogSuccess();
+		}
+
+		static void LogFailure()
+		{
+			GetAPI().LogFailure();
+		}
+
+		static void LogString(const std::string& s)
+		{
+			GetAPI().LogString(s);
+		}
+
+		static void LogStringAndNewline(const std::string& s)
+		{
+			GetAPI().LogString(s);
+			GetAPI().Newline();
+		}
 
 		template<typename Type>
 		static void LogObject(const Type& t)
