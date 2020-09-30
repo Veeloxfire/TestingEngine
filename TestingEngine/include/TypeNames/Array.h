@@ -13,12 +13,6 @@ namespace TypeNames
 		constexpr Array() {}
 	};
 
-	template<typename T, unsigned int Size>
-	Array(const Array<T, Size>& arr)->Array<T, Size>;
-
-	template<typename T, unsigned int Size>
-	Array(Array<T, Size>&& arr)->Array<T, Size>;
-
 	template<unsigned int Size>
 	using String = Array<char, Size>;
 	

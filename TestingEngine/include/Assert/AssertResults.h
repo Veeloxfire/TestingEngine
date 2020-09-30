@@ -15,16 +15,42 @@ namespace Testing
 	public:
 		void LogAssert() const override final
 		{
-			LogAssertType();
+			if(AssertFailed())
+			{
+				IO::LogString("Assert Failed:");
 
-			IO::LogStringAndNewline("Contents:");
+				IO::IndentOut();
+				LogFailedAssertDetails();
+				IO::IndentIn();
+			}
+			else
+			{
+				IO::LogString("Assert Succeeded:");
+
+				IO::IndentOut();
+				LogAssertType();
+				IO::IndentIn();
+			}
+		}
+
+		void LogFailedAssertDetails() const
+		{
+			LogAssertType();
+			IO::NewLine();
+
+			IO::LogString("Contents:");
+
+			IO::IndentOut();
 			LogAssertContents();
+			IO::IndentInWithoutNewline();
 		}
 
 		void LogAssertType() const
 		{
-			IO::LogString("Assert Failed Of Type: ");
-			IO::LogStringAndNewline(GetAssertType());
+			IO::LogString("Type:");
+			IO::IndentOut();
+			IO::LogString(GetAssertType());
+			IO::IndentInWithoutNewline();
 		}
 
 		virtual void LogAssertContents() const = 0;
@@ -66,7 +92,10 @@ namespace Testing
 
 		void LogErrorMessage() const
 		{
-			IO::LogStringAndNewline(ErrorMessage);
+			IO::LogString("Message:");
+			IO::IndentOut();
+			IO::LogString(ErrorMessage);
+			IO::IndentIn();
 		}
 
 	public:

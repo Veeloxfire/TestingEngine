@@ -33,7 +33,7 @@ namespace Testing
 
 		ConstOf<First> first;
 	public:
-		bool Failed() const { return first.AssertFailed() && TestResult<Rest...>::Failed(); }
+		bool Failed() const { return first.AssertFailed() || TestResult<Rest...>::Failed(); }
 
 		constexpr TestResult(First& F, Rest& ... R) : first(std::move(F)), TestResult<Rest...>(R...)
 		{}

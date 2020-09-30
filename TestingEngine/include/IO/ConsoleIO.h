@@ -11,11 +11,19 @@ namespace Testing
 {
 	class ConsoleIO
 	{
+		unsigned int m_Indents = 0;
+		void LogIndent() const;
+		void LogIndent(std::ostream& stream) const;
 	public:
+		void IndentOut();
+		void IndentIn();
+		void IndentInWithoutNewline();
+
 		void LogSuccess() const;
 		void LogFailure() const;
 		void LogString(const std::string& s) const;
 		void Newline() const;
+		void Newline(std::ostream& stream) const;
 		void Flush() const;
 		void Endline() const;
 		void LogAssert(const AssertResultAPI& res) const;
@@ -23,7 +31,8 @@ namespace Testing
 		template<typename Top, typename ... Types>
 		void LogObject(const LogObject<Top, Types...>& log) const
 		{
-			std::cout << TypeNames::TypeName<Top>::name << ":\n";
+			std::cout << TypeNames::TypeName<Top>::name << ':';
+			Newline();
 			RecursivelyStreamObject(log, std::cout);
 		}
 
@@ -43,7 +52,7 @@ namespace Testing
 		void RecusivelyLogAsserts(const TestResult<First, Rest...>& log) const
 		{
 			LogAssert(log.GetFirst());
-			RecusivelyLogAsserts<Rest...>(log);
+			RecusivelyLogAsserts(static_cast<const TestResult<Rest...>&>(log));
 		}
 
 	private:
@@ -59,18 +68,19 @@ namespace Testing
 
 			if constexpr (IsBaseOf<LogObjectBase, First>::value)
 			{
-				stream << '\n';
+				Newline(stream);
 				RecursivelyStreamObject<Spaces + 1>(log.GetFirst(), stream);
 			}
 			else
 			{
-				stream << log.GetFirst() << '\n';
+				stream << log.GetFirst();
+				Newline(stream);
 			}
 
 			RecursivelyStreamObject<Spaces>(log.NextObj(), stream);
 		}
 
-		template< unsigned int Spaces = 1, typename Top, typename Last>
+		template<unsigned int Spaces = 1, typename Top, typename Last>
 		void RecursivelyStreamObject(const Testing::LogObject<Top, Last>& log, std::ostream& stream) const
 		{
 			for (unsigned int i = 0; i < Spaces; i++)
@@ -82,12 +92,12 @@ namespace Testing
 
 			if constexpr (IsBaseOf<LogObjectBase, Last>::value)
 			{
-				stream << '\n';
+				Newline(stream);
 				RecursivelyStreamObject<Spaces + 1>(log.GetFirst(), stream);
 			}
 			else
 			{
-				stream << log.GetFirst() << '\n';
+				stream << log.GetFirst();
 			}
 		}
 	};

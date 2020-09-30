@@ -1,7 +1,5 @@
-#include "Engine\Engine.h"
-#include "TypeNames\TypeName.h"
-#include "LogObject\LogObjectFactory.h"
-#include "Test\Test.h"
+//EXAMPLE MAIN
+#include "pch.hpp"
 
 struct TwoInts
 {
@@ -69,40 +67,38 @@ namespace Testing
 	};
 }
 
-auto TestFunction()
-{
+StartModule(Module)
 
+ModuleTest(FirstTest)
+{
+	Pair<int, int> a{ 1, 1 };
+	Pair<int, int> b = PairFactory(1, 1);
+
+	auto Test1 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+
+	a = {1, 1};
+	auto Test2 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+	return Testing::TestResult(Test1, Test2);
 }
 
-auto TestFunction2()
+ModuleTest(SecondTest)
 {
-	TwoInts a{1, 1};
+	TwoInts a{ 1, 2 };
 	TwoInts b = TwoIntsFactory(1);
 
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
+	auto Test1 = Testing::Assert::AreNotEqual(a, b, "a and b should not be equal");
+
+	a = { 1, 1 };
+	auto Test2 = Testing::Assert::AreEqual(a, b, "a and b should be equal");
+	return Testing::TestResult(Test1, Test2);
 }
 
-TESTS_START
+EndModule(Test(FirstTest), Test(SecondTest))
 
-TEST_START("FirstTest")
+int main()
 {
-	Pair<int, int> a{ 1, 1 };
-	Pair<int, int> b = PairFactory(1, 1);
-
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
+	::Testing::Engine engine{ModuleObj(Module)};
+	engine.RunAllModules();
+	return 0;
 }
-TEST_END
 
-TEST_START("SecondTest")
-{
-	Pair<int, int> a{ 1, 1 };
-	Pair<int, int> b = PairFactory(1, 1);
-
-	auto Test1 = Testing::Assert::AreEqual(a, b);
-	return Testing::TestResult(Test1);
-}
-TEST_END
-
-TESTS_END

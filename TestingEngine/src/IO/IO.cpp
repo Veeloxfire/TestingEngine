@@ -1,12 +1,37 @@
-#include "IO.h"
+#include "pch.hpp"
 #include <utility>
 
 namespace Testing
 {
+	IO::API& IO::GetMutableAPI()
+	{
+		static API io = {};
+		return io;
+	}
+
 	const IO::API& IO::GetAPI()
 	{
-		static const API io = {};
-		return io;
+		return GetMutableAPI();
+	}
+
+	void IO::IndentIn()
+	{
+		GetMutableAPI().IndentIn();
+	}
+
+	void IO::IndentInWithoutNewline()
+	{
+		GetMutableAPI().IndentInWithoutNewline();
+	}
+
+	void IO::IndentOut()
+	{
+		GetMutableAPI().IndentOut();
+	}
+
+	void IO::NewLine()
+	{
+		GetAPI().Newline();
 	}
 
 	void IO::LogSuccess()
