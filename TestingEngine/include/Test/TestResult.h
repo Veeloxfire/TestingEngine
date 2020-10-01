@@ -18,7 +18,7 @@ namespace Testing
 	public:
 		bool Failed() const {return first.AssertFailed(); }
 
-		constexpr TestResult(Last& F) : first(std::move(F))
+		constexpr TestResult(Last&& F) : first(std::forward<Last>(F))
 		{}
 		constexpr TestResult(const Last& F) : first(F)
 		{}
@@ -35,7 +35,8 @@ namespace Testing
 	public:
 		bool Failed() const { return first.AssertFailed() || TestResult<Rest...>::Failed(); }
 
-		constexpr TestResult(First& F, Rest& ... R) : first(std::move(F)), TestResult<Rest...>(R...)
+		constexpr TestResult(First&& F, Rest&& ... R)
+			: first(std::forward<First>(F)), TestResult<Rest>(std::forward<Rest>(R)...)
 		{}
 		constexpr TestResult(const First& F, Rest& ... R) : first(F), TestResult<Rest...>(R...)
 		{}
