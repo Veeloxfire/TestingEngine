@@ -128,7 +128,17 @@ ModuleTest(FifthTest)
 	return Testing::TestResult(std::move(Assert1));
 }
 
-EndModule(Test(FourthTest), Test(FifthTest))
+ModuleTest(SixthTest)
+{
+	int a = 2;
+	int b = 3;
+	int* c = &a;
+	auto Assert1 = Testing::Assert::AreEqual(&b, c, "Pointers should be equal");
+
+	return Testing::TestResult(std::move(Assert1));
+}
+
+EndModule(Test(FourthTest), Test(FifthTest), Test(SixthTest))
 
 int main()
 {

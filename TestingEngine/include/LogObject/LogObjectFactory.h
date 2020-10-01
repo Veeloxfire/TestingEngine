@@ -69,7 +69,7 @@ namespace Testing
 				public:
 					constexpr static decltype(auto) Build(const TwoInts& i)
 					{
-						return LogObjectFactoryBackend<Input>::Build(i.a, i.b);
+						return LogObjectFactoryBackend<TwoInts>::Build(i.a, i.b);
 					}
 				};
 			}
@@ -80,6 +80,36 @@ namespace Testing
 		constexpr static decltype(auto) Build(const Input& i)
 		{
 			return LogObjectFactoryBackend<Input>::Build(i);
+		}
+	};
+
+	template <typename Input>
+	class LogObjectFactory<Input*>
+	{
+	public:
+		constexpr static decltype(auto) Build(const Input* const i)
+		{
+			return LogObjectFactoryBackend<const Input*>::Build(i);
+		}
+	};
+
+	template <typename Input>
+	class LogObjectFactory<Input&>
+	{
+	public:
+		constexpr static decltype(auto) Build(const Input& i)
+		{
+			return LogObjectFactory<Input>::Build(i);
+		}
+	};
+
+	template <typename Input>
+	class LogObjectFactory<const Input>
+	{
+	public:
+		constexpr static decltype(auto) Build(const Input& i)
+		{
+			return LogObjectFactory<Input>::Build(i);
 		}
 	};
 

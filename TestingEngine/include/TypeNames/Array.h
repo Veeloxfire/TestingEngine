@@ -104,10 +104,10 @@ namespace TypeNames
 			return f;
 		}
 
-		template <typename First, typename ... Strings>
-		constexpr static auto ConcatStrings(const First& f, const Strings& ... strs)
+		template <typename First, typename Second, typename Third, typename ... Rest>
+		constexpr static auto ConcatStrings(const First& f, const Second& s, const Third& t, const Rest& ... strs)
 		{
-			return ConcatStrings(f, ConcatStrings(strs...));
+			return ConcatStrings(f, ConcatStrings(s, t, strs...));
 		}
 
 		template <typename First>

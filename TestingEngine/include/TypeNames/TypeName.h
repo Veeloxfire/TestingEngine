@@ -16,21 +16,21 @@ namespace TypeNames
 	template <typename T>
 	struct TypeName<T const> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::name, " const");
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::Arr, " const");
 		constexpr static const char* name = Arr.Arr;
 	};
 #else
 	template <typename T>
 	struct TypeName<const T> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings("const ", TypeName<T>::name);
+		constexpr static Array Arr = ArrayFactory::ConcatStrings("const ", TypeName<T>::Arr);
 		constexpr static const char* name = Arr.Arr;
 	};
 
 	template <typename T>
 	struct TypeName<T* const> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::name, "* const");
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::Arr, "* const");
 		constexpr static const char* name = Arr.Arr;
 	};
 #endif
@@ -38,21 +38,21 @@ namespace TypeNames
 	template <typename T>
 	struct TypeName<T*> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::name, "*");
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::Arr, "*");
 		constexpr static const char* name = Arr.Arr;
 	};
 
 	template <typename T>
 	struct TypeName<T&> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::name, "&");
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::Arr, "&");
 		constexpr static const char* name = Arr.Arr;
 	};
 
 	template <typename T>
 	struct TypeName<T&&> : public Testing::IsBaseOf<Testing::True, TypeName<T>>
 	{
-		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::name, "&&");
+		constexpr static Array Arr = ArrayFactory::ConcatStrings(TypeName<T>::Arr, "&&");
 		constexpr static const char* name = Arr.Arr;
 	};
 
