@@ -42,14 +42,16 @@ namespace Testing
 			return AssertWithMessage<AreSameTypeDetails<Expected, Actual>>::AssertCheck(std::move(Message));
 		}
 
-		[[nodiscard]] static auto AlwaysFail(std::string Message)
+		template<typename Lambda>
+		[[nodiscard]] static auto ShouldThrow(Lambda&& l)
 		{
-			return AssertWithMessage<AlwaysFailDetails>::AssertCheck(std::move(Message));
+			return AssertWithoutMessage<ShouldThrowDetails<Lambda>>::AssertCheck(std::forward<Lambda>(l));
 		}
 
-		[[nodiscard]] static auto NeverFail() // Does seem a little pointless. Might remove
+		template<typename Lambda>
+		[[nodiscard]] static auto ShouldThrow(Lambda&& l, std::string Message)
 		{
-			return AssertWithoutMessage<NeverFailDetails>::AssertCheck();
+			return AssertWithMessage<ShouldThrowDetails<Lambda>>::AssertCheck(std::move(Message), std::forward<Lambda>(l));
 		}
 	};
 }

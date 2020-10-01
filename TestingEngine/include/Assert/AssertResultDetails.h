@@ -116,46 +116,45 @@ namespace Testing
 
 		constexpr AreSameTypeDetails() = default;
 
-		[[nodiscard]] static constexpr bool AssertBool()
+		[[nodiscard]] static constexpr bool AssertBool() noexcept
 		{
 			return IsSame<Expected, Actual>::value;
 		}
 	};
 
-	class FixedDetails
+	template<typename L>
+	class LambdaDetails
 	{
+		L lambda;
 	public:
-		constexpr FixedDetails() = default;
+		constexpr LambdaDetails(L&& l) : lambda(l) {}
 
 		void LogDetails() const
 		{
-			IO::LogString("No Details");
+			IO::LogString("Executable-Object");
 		}
 	};
 
-	class AlwaysFailDetails : public FixedDetails
+	template<typename L>
+	class ShouldThrowDetails : public LambdaDetails<L>
 	{
 	public:
-		constexpr static const char Name[] = "AlwaysFail";
+		constexpr ShouldThrowDetails(L&& l) : LambdaDetails<L>(std::forward<L>(l))
+		{}
 
-		constexpr AlwaysFailDetails() = default;
+		constexpr static const char Name[] = "ShouldThrow";
 
-		[[nodiscard]] static constexpr bool AssertBool()
+		[[nodiscard]] static constexpr bool AssertBool(const L& l)
 		{
-			return false;
-		}
-	};
-
-	class NeverFailDetails : public FixedDetails
-	{
-	public:
-		constexpr static const char Name[] = "NeverFail";
-
-		constexpr NeverFailDetails() = default;
-
-		[[nodiscard]] static constexpr bool AssertBool()
-		{
-			return true;
+			try
+			{
+				l();
+				return false;
+			}
+			catch (...)
+			{
+				return true;
+			}
 		}
 	};
 }

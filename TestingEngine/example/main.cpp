@@ -121,7 +121,14 @@ ModuleTest(FourthTest)
 	return Testing::TestResult(Assert1, Assert2);
 }
 
-EndModule(Test(FourthTest))
+ModuleTest(FifthTest)
+{
+	auto Assert1 = Testing::Assert::ShouldThrow([](){ throw 1; });
+
+	return Testing::TestResult(std::move(Assert1));
+}
+
+EndModule(Test(FourthTest), Test(FifthTest))
 
 int main()
 {
