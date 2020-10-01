@@ -15,8 +15,6 @@ namespace Testing
 			:Expected(std::forward<Type>(e)), Actual(std::forward<Type>(a))
 		{}
 
-		//constexpr ComparisonDetails(ComparisonDetails<Type>&& d) = default;
-
 		void LogDetails() const
 		{
 			LogExpected();
@@ -53,8 +51,6 @@ namespace Testing
 			: ComparisonDetails<Type>(std::forward<Type>(e), std::forward<Type>(a))
 		{}
 
-		//constexpr AreEqualDetails(AreEqualDetails&& e) = default;
-
 		[[nodiscard]] static constexpr bool AssertBool(const Type& e, const Type& a)
 		{
 			return e == a;
@@ -84,7 +80,7 @@ namespace Testing
 		static_assert(TypeNames::TypeName<Expected>::value, "TypeName for expected class has not been declared");
 		static_assert(TypeNames::TypeName<Actual>::value, "TypeName for actual class has not been declared");
 
-		constexpr TypeComparisonDetails() {}
+		constexpr TypeComparisonDetails() = default;
 
 		void LogDetails() const
 		{
@@ -118,12 +114,48 @@ namespace Testing
 	public:
 		constexpr static const char Name[] = "AreSameType";
 
-		constexpr AreSameTypeDetails()
-		{}
+		constexpr AreSameTypeDetails() = default;
 
 		[[nodiscard]] static constexpr bool AssertBool()
 		{
 			return IsSame<Expected, Actual>::value;
+		}
+	};
+
+	class FixedDetails
+	{
+	public:
+		constexpr FixedDetails() = default;
+
+		void LogDetails() const
+		{
+			IO::LogString("No Details");
+		}
+	};
+
+	class AlwaysFailDetails : public FixedDetails
+	{
+	public:
+		constexpr static const char Name[] = "AlwaysFail";
+
+		constexpr AlwaysFailDetails() = default;
+
+		[[nodiscard]] static constexpr bool AssertBool()
+		{
+			return false;
+		}
+	};
+
+	class NeverFailDetails : public FixedDetails
+	{
+	public:
+		constexpr static const char Name[] = "NeverFail";
+
+		constexpr NeverFailDetails() = default;
+
+		[[nodiscard]] static constexpr bool AssertBool()
+		{
+			return true;
 		}
 	};
 }

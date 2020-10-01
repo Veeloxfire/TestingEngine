@@ -13,7 +13,7 @@ namespace Testing
 		}
 
 		template <typename Type>
-		[[nodiscard]] constexpr static auto AreEqual(Type Expected, Type Actual, std::string Message)
+		[[nodiscard]] static auto AreEqual(Type Expected, Type Actual, std::string Message)
 		{
 			return AssertWithMessage<AreEqualDetails<Type>>::AssertCheck(std::move(Message), std::move(Expected), std::move(Actual));
 		}
@@ -25,7 +25,7 @@ namespace Testing
 		}
 
 		template <typename Type>
-		[[nodiscard]] constexpr static auto AreNotEqual(Type Expected, Type Actual, std::string Message)
+		[[nodiscard]] static auto AreNotEqual(Type Expected, Type Actual, std::string Message)
 		{
 			return AssertWithMessage<AreNotEqualDetails<Type>>::AssertCheck(std::move(Message), std::move(Expected), std::move(Actual));
 		}
@@ -37,9 +37,23 @@ namespace Testing
 		}
 
 		template <typename Expected, typename Actual>
-		[[nodiscard]] constexpr static auto AreSameType(std::string Message)
+		[[nodiscard]] static auto AreSameType(std::string Message)
 		{
-			return AssertWithoutMessage<AreSameTypeDetails<Expected, Actual>>::AssertCheck(std::move(Message));
+			return AssertWithMessage<AreSameTypeDetails<Expected, Actual>>::AssertCheck(std::move(Message));
 		}
+
+		[[nodiscard]] static auto AlwaysFail(std::string Message)
+		{
+			return AssertWithoutMessage<AlwaysFailDetails>::AssertCheck(std::move(Message));
+		}
+
+		[[nodiscard]] static auto NeverFail(std::string Message)
+		{
+			return AssertWithoutMessage<NeverFailDetails>::AssertCheck(std::move(Message));
+		}
+
+		template<T>
+		[[nodiscard]] static auto IsRValue(T)
+		
 	};
 }
