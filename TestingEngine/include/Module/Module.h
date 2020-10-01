@@ -35,4 +35,5 @@ namespace Testing
 #define ModuleTest(Name)\
 	;\
 	constexpr static char TestName(Name)[sizeof(#Name)/sizeof(char)]{#Name};\
-	constexpr static auto TestLambda(Name) = []()
+	constexpr static auto TestLambda(Name) = []<typename RValueReferenceType, typename ForwardingReferenceType>\
+([[maybe_unused]] RValueReferenceType&& RValueReference, [[maybe_unused]] ForwardingReferenceType&& ForwardingReference)

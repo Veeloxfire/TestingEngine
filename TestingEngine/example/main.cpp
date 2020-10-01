@@ -110,11 +110,15 @@ StartModule(Module3)
 
 ModuleTest(FourthTest)
 {
-	const auto Res = Testing::AssertHelpers::ConstructorChecker(std::move(Testing::AssertHelpers::GetEmptyRValRef()));
+	const auto Res1 = Testing::AssertHelpers::ConstructorChecker(
+		std::forward<RValueReferenceType>(RValueReference));
+	auto Assert1 = Testing::Assert::AreEqual(Testing::AssertHelpers::ConstructorType::RValRef, Res1.GetType());
 
-	auto Assert1 = Testing::Assert::AreEqual(Res.GetType(), Testing::AssertHelpers::ConstructorType::ConstRef);
+	const auto Res2 =  Testing::AssertHelpers::ConstructorChecker(
+		std::forward<ForwardingReferenceType>(ForwardingReference));
+	auto Assert2 = Testing::Assert::AreEqual(Testing::AssertHelpers::ConstructorType::NonConstRef, Res2.GetType());
 
-	return Testing::TestResult(Assert1);
+	return Testing::TestResult(Assert1, Assert2);
 }
 
 EndModule(Test(FourthTest))

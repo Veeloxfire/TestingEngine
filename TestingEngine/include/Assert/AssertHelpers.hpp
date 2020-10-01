@@ -5,33 +5,24 @@ namespace Testing
 {
 	namespace AssertHelpers
 	{
-		class Empty {};
-		
-		[[nodiscard]] constexpr Empty&& GetEmptyRValRef() noexcept { return Empty(); }
-
-		[[nodiscard]] constexpr Empty& GetEmptyNonConstRef() noexcept
-		{ 
-			Empty e{};
-			return e;
-		}
-
-		[[nodiscard]] constexpr const Empty& GetEmptyConstRef()	noexcept { return Empty(); }
+		class ToyClass {};
 
 		enum class ConstructorType
 		{
 			RValRef, ConstRef, NonConstRef
 		};
 
+		template<typename T>
 		class ConstructorChecker
 		{
 			const ConstructorType type;
 
 		public:
-			constexpr ConstructorChecker([[maybe_unused]] Empty& e) : type(ConstructorType::NonConstRef)
+			constexpr ConstructorChecker([[maybe_unused]] T& e) : type(ConstructorType::NonConstRef)
 			{}
-			constexpr ConstructorChecker([[maybe_unused]] const Empty& e) : type(ConstructorType::ConstRef)
+			constexpr ConstructorChecker([[maybe_unused]] const T& e) : type(ConstructorType::ConstRef)
 			{}
-			constexpr ConstructorChecker([[maybe_unused]] Empty&& e) : type(ConstructorType::RValRef)
+			constexpr ConstructorChecker([[maybe_unused]] T&& e) : type(ConstructorType::RValRef)
 			{}
 
 			[[nodiscard]] constexpr ConstructorType GetType() const noexcept

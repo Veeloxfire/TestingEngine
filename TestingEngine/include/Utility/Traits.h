@@ -24,6 +24,9 @@ namespace Testing
 	template<typename T>
 	using ReturnTypeOf = decltype(Unevaluated<T>()());
 
+	template<typename T, typename ... ArgTypes>
+	using ReturnTypeOfArgs = decltype(Unevaluated<T>()(Unevaluated<ArgTypes>()...));
+
 	template<typename T>
 	struct RemoveReferenceHelper
 	{
@@ -102,6 +105,10 @@ namespace Testing
 
 	template <typename Base, typename ... Derived>
 	using IsAllBaseOf = And<IsBaseOf<Base, Derived>...>;
+
+	//Warning - Derived is FIRST argument unlike in IsBaseOf
+	template<typename Derived, typename Base>
+	concept BaseOf = IsBaseOf<Base, Derived>::value;
 
 	template<bool B, class T, class F> //Dont need this but it makes it neater
 	struct ConditionalHelper;

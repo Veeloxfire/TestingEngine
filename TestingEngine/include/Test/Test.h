@@ -1,19 +1,22 @@
 #pragma once
 #include "../TypeNames/Array.h"
 #include "../Assert/Assert.h"
+#include "../Assert/AssertHelpers.hpp"
 #include "TestResult.h"
 
 namespace Testing
 {
 	class TestBase {};
 
-	template<unsigned int NameLength, typename TestFunction>
+	template<typename TestFunction>
+	concept ReturnsTestResult = requires(TestFunction t, AssertHelpers::ToyClass r, AssertHelpers::ToyClass l)
+	{
+		{t(std::move(r), l)}->BaseOf<TestResultBase>;
+	};
+
+	template<unsigned int NameLength, typename TestFunction> requires ReturnsTestResult<TestFunction>
 	class Test : public TestBase
 	{
-		using ReturnType = ReturnTypeOf<TestFunction>;
-
-		static_assert(IsBaseOf<TestResultBase, ReturnType>::value, "Function Must Return TestResult");
-
 		const TypeNames::Array<char, NameLength> m_TestName;
 		const TestFunction m_TestFunction;
 	public:
@@ -22,9 +25,11 @@ namespace Testing
 		{}
 
 		constexpr const char* GetName() const { return m_TestName.Arr; }
-		constexpr ReturnType operator()() const
+		constexpr auto operator()() const
 		{
-			return m_TestFunction();
+			AssertHelpers::ToyClass rval{};
+			AssertHelpers::ToyClass lval{};
+			return m_TestFunction(std::move(rval), lval);
 		}
 	};
 
