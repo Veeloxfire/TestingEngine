@@ -44,16 +44,12 @@ namespace Testing
 
 		[[nodiscard]] static auto AlwaysFail(std::string Message)
 		{
-			return AssertWithoutMessage<AlwaysFailDetails>::AssertCheck(std::move(Message));
+			return AssertWithMessage<AlwaysFailDetails>::AssertCheck(std::move(Message));
 		}
 
-		[[nodiscard]] static auto NeverFail(std::string Message)
+		[[nodiscard]] static auto NeverFail() // Does seem a little pointless. Might remove
 		{
-			return AssertWithoutMessage<NeverFailDetails>::AssertCheck(std::move(Message));
+			return AssertWithoutMessage<NeverFailDetails>::AssertCheck();
 		}
-
-		template<T>
-		[[nodiscard]] static auto IsRValue(T)
-		
 	};
 }

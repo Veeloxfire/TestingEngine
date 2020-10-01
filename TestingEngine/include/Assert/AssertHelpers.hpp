@@ -7,19 +7,15 @@ namespace Testing
 	{
 		class Empty {};
 		
-		[[nodiscard]] constexpr Empty&& GetEmptyRValRef() { return Empty(); }
+		[[nodiscard]] constexpr Empty&& GetEmptyRValRef() noexcept { return Empty(); }
 
-		[[nodiscard]] constexpr Empty& GetEmptyNonConstRef()
+		[[nodiscard]] constexpr Empty& GetEmptyNonConstRef() noexcept
 		{ 
-			Empty e;
+			Empty e{};
 			return e;
 		}
 
-		[[nodiscard]] constexpr const Empty& GetEmptyConstRef()
-		{ 
-			Empty e;
-			return Empty();
-		}
+		[[nodiscard]] constexpr const Empty& GetEmptyConstRef()	noexcept { return Empty(); }
 
 		enum class ConstructorType
 		{
