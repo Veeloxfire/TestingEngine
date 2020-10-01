@@ -40,6 +40,12 @@ namespace Testing
 	};
 
 	template<typename T>
+	struct RemoveReferenceHelper<T&&>
+	{
+		using Type = T;
+	};
+
+	template<typename T>
 	using RemoveReference = typename RemoveReferenceHelper<T>::Type;
 
 	template<typename T>
