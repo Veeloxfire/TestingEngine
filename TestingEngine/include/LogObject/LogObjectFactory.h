@@ -83,37 +83,37 @@ namespace Testing
 		}
 	};
 
-#define LogObjectFactoryForWholeType(Type)\
+#define LogObjectFactoryForStreamableType(Type)\
 	template <>\
 	class LogObjectFactory<Type>\
 	{\
 	public:\
 		constexpr static decltype(auto) Build(const Type& i)\
 		{\
-			return LogObjectFactoryBackend<int>::Build(i);\
+			return LogObjectFactoryBackend<Type>::Build(i);\
 		}\
 	}
 
 	//Fundamental Types
-	LogObjectFactoryForWholeType(bool);
+	LogObjectFactoryForStreamableType(bool);
 
-	LogObjectFactoryForWholeType(short);
-	LogObjectFactoryForWholeType(unsigned short);
-	LogObjectFactoryForWholeType(int);
-	LogObjectFactoryForWholeType(unsigned int);
-	LogObjectFactoryForWholeType(long);
-	LogObjectFactoryForWholeType(unsigned long);
-	LogObjectFactoryForWholeType(long long);
-	LogObjectFactoryForWholeType(unsigned long long);
+	LogObjectFactoryForStreamableType(short);
+	LogObjectFactoryForStreamableType(unsigned short);
+	LogObjectFactoryForStreamableType(int);
+	LogObjectFactoryForStreamableType(unsigned int);
+	LogObjectFactoryForStreamableType(long);
+	LogObjectFactoryForStreamableType(unsigned long);
+	LogObjectFactoryForStreamableType(long long);
+	LogObjectFactoryForStreamableType(unsigned long long);
 
-	LogObjectFactoryForWholeType(char);
-	LogObjectFactoryForWholeType(unsigned char);
-	LogObjectFactoryForWholeType(signed char);
-	LogObjectFactoryForWholeType(wchar_t);
-	LogObjectFactoryForWholeType(char16_t);
-	LogObjectFactoryForWholeType(char32_t);
+	LogObjectFactoryForStreamableType(char);
+	LogObjectFactoryForStreamableType(unsigned char);
+	LogObjectFactoryForStreamableType(signed char);
+	LogObjectFactoryForStreamableType(wchar_t);
+	LogObjectFactoryForStreamableType(char16_t);
+	LogObjectFactoryForStreamableType(char32_t);
 
-	LogObjectFactoryForWholeType(float);
-	LogObjectFactoryForWholeType(double);
-	LogObjectFactoryForWholeType(long double);
+	LogObjectFactoryForStreamableType(float);
+	LogObjectFactoryForStreamableType(double);
+	LogObjectFactoryForStreamableType(long double);
 }

@@ -106,9 +106,22 @@ ModuleTest(ThirdTest)
 
 EndModule(Test(ThirdTest))
 
+StartModule(Module3)
+
+ModuleTest(FourthTest)
+{
+	const auto Res = Testing::AssertHelpers::ConstructorChecker(std::move(Testing::AssertHelpers::GetEmptyRValRef()));
+
+	auto Assert1 = Testing::Assert::AreEqual(Res.GetType(), Testing::AssertHelpers::ConstructorType::ConstRef);
+
+	return Testing::TestResult(Assert1);
+}
+
+EndModule(Test(FourthTest))
+
 int main()
 {
-	::Testing::TestModules(Module(Module1), Module(Module2));
+	::Testing::TestModules(Module(Module1), Module(Module2), Module(Module3));
 	return 0;
 }
 

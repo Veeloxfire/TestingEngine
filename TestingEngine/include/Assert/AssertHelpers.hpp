@@ -49,5 +49,18 @@ namespace TypeNames
 
 namespace Testing
 {
-	LogObjectFactoryForWholeType(AssertHelpers::ConstructorType);
+
+	LogObjectFactoryForStreamableType(AssertHelpers::ConstructorType);
+
+	std::ostream& operator<<(std::ostream& stream, const AssertHelpers::ConstructorType i)
+	{
+		switch (i)
+		{
+		case AssertHelpers::ConstructorType::RValRef: return stream << "RValRef";
+		case AssertHelpers::ConstructorType::ConstRef: return stream << "ConstRef";
+		case AssertHelpers::ConstructorType::NonConstRef: return stream << "NonConstRef";
+		}
+
+		return stream << "Unknown ConstructorType";
+	}
 }
