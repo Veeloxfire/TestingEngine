@@ -36,7 +36,7 @@ namespace Testing
 		bool Failed() const { return first.AssertFailed() || TestResult<Rest...>::Failed(); }
 
 		constexpr TestResult(First&& F, Rest&& ... R)
-			: first(std::forward<First>(F)), TestResult<Rest>(std::forward<Rest>(R)...)
+			: first(std::forward<First>(F)), TestResult<Rest...>(std::forward<Rest>(R)...)
 		{}
 		constexpr TestResult(const First& F, Rest& ... R) : first(F), TestResult<Rest...>(R...)
 		{}
@@ -45,5 +45,7 @@ namespace Testing
 	};
 
 	template<typename ... Results>
-	TestResult(Results& ... L)->TestResult<Results...>;
+	TestResult(Results&& ... )->TestResult<RemoveReference<Results>...>;
+	template<typename ... Results>
+	TestResult(const Results& ...)->TestResult<RemoveReference<Results>...>;
 }
